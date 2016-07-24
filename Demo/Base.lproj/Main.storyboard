@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,8 +16,120 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="mAc-Fh-tOu">
+                                <rect key="frame" x="0.0" y="113" width="600" height="375"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kinder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKz-4R-MNY">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="85"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="72"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j7Y-AW-UcR">
+                                        <rect key="frame" x="270" y="109" width="60" height="60"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="EWN-yG-f36"/>
+                                            <constraint firstAttribute="height" constant="60" id="aMw-f5-pug"/>
+                                        </constraints>
+                                    </view>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="center" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="N7O-Da-cjS" userLabel="Username Field" customClass="CustomTextField" customModule="Demo" customModuleProvider="target">
+                                        <rect key="frame" x="180" y="193" width="240" height="45"/>
+                                        <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="6Fc-dn-NDP"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="360" id="7q6-sM-sye"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="ke0-lU-Y9o"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="inset">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="TPc-Bw-gm2" userLabel="Password Field" customClass="CustomTextField" customModule="Demo" customModuleProvider="target">
+                                        <rect key="frame" x="180" y="262" width="240" height="45"/>
+                                        <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="FbN-gY-lT0"/>
+                                            <constraint firstAttribute="height" constant="45" id="f0D-xu-DcD"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="360" id="pwI-i7-eCP"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="inset">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GOe-AM-ytn" customClass="CustomButton" customModule="Demo" customModuleProvider="target">
+                                        <rect key="frame" x="180" y="331" width="240" height="44"/>
+                                        <color key="backgroundColor" red="0.1058823529" green="0.47843137250000001" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="26"/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="GOe-AM-ytn" firstAttribute="width" secondItem="TPc-Bw-gm2" secondAttribute="width" id="1PD-xQ-7qh"/>
+                                    <constraint firstItem="N7O-Da-cjS" firstAttribute="leading" secondItem="mAc-Fh-tOu" secondAttribute="leading" constant="8" id="708-Vo-7Wd"/>
+                                    <constraint firstItem="KKz-4R-MNY" firstAttribute="leading" secondItem="mAc-Fh-tOu" secondAttribute="leading" id="Aiz-iS-hkA"/>
+                                    <constraint firstAttribute="trailing" secondItem="KKz-4R-MNY" secondAttribute="trailing" id="UF2-3Y-vES"/>
+                                    <constraint firstAttribute="trailing" secondItem="N7O-Da-cjS" secondAttribute="trailing" constant="8" id="Zac-Y4-Lh9"/>
+                                    <constraint firstItem="j7Y-AW-UcR" firstAttribute="leading" secondItem="mAc-Fh-tOu" secondAttribute="leading" constant="8" id="b3t-eA-9tr"/>
+                                    <constraint firstAttribute="trailing" secondItem="j7Y-AW-UcR" secondAttribute="trailing" constant="8" id="dDf-WC-UmA"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="708-Vo-7Wd"/>
+                                        <exclude reference="Zac-Y4-Lh9"/>
+                                        <exclude reference="b3t-eA-9tr"/>
+                                        <exclude reference="dDf-WC-UmA"/>
+                                    </mask>
+                                </variation>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="mAc-Fh-tOu" secondAttribute="trailing" id="9dS-mX-UZ5"/>
+                            <constraint firstItem="mAc-Fh-tOu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="F3T-sC-6dc"/>
+                            <constraint firstItem="mAc-Fh-tOu" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Ucs-Zw-jhH"/>
+                            <constraint firstItem="mAc-Fh-tOu" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ghP-kn-3bI"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="mAc-Fh-tOu" secondAttribute="bottom" id="wW2-eC-cvb"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Ucs-Zw-jhH"/>
+                                <exclude reference="wW2-eC-cvb"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="loginButton" destination="GOe-AM-ytn" id="8rL-ZI-JxX"/>
+                        <outlet property="passwordField" destination="TPc-Bw-gm2" id="vE7-ko-Z76"/>
+                        <outlet property="titleLabel" destination="KKz-4R-MNY" id="S3H-hz-d7X"/>
+                        <outlet property="usernameField" destination="N7O-Da-cjS" id="G4a-gn-pGf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
