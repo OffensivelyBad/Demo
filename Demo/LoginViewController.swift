@@ -8,58 +8,38 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+var nays: Array<Person>?
+var yays: Array<Person>?
 
+class LoginViewController: KeyboardVC, UITextFieldDelegate {
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var usernameField: CustomTextField!
     @IBOutlet weak var passwordField: CustomTextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    var kbHidden = true
-    var viewOrigin = CGFloat()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        initialLoad()
     }
     
     func initialLoad() {
         
-        setupKeyboardScrolling()
+        setupKeyboardScrolling(self)
         
         self.usernameField.delegate = self
         self.passwordField.delegate = self
         
-//        self.titleLabel.alpha = 0
         self.usernameField.alpha = 0
         self.passwordField.alpha = 0
         self.loginButton.alpha = 0
         
-//        self.titleLabel.animateFade(0, alpha: 1, duration: 1)
         self.usernameField.animateFade(0, alpha: 1, duration: 1)
         self.passwordField.animateFade(0, alpha: 1, duration: 1)
         self.loginButton.animateFade(0, alpha: 1, duration: 1)
-        
-    }
-
-    override func viewDidAppear(animated: Bool) {
-        
-        initialLoad()
-        
-    }
-    
-    func setupKeyboardScrolling() {
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        
-        self.viewOrigin = self.view.frame.origin.y
-        
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        kbHidden = true
-        self.view.endEditing(true)
         
     }
     
@@ -76,28 +56,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    @IBAction func loginTouched(sender: AnyObject) {
         
-        let userInfo: [NSObject: AnyObject] = sender.userInfo!
+        if let username = self.usernameField.text, password = self.passwordField.text {
         
-        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
-        let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
-        
-        if keyboardSize.height == offset.height {
-            if kbHidden {
-                kbHidden = false
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    self.view.frame.origin.y -= keyboardSize.height / 2
-                })
+            let (success, error) = simulateNetworkCall(username, password: password)
+            
+            if success {
+                performSegueWithIdentifier("loginHomeSegue", sender: self)
+            } else {
+                displayAlert("login", title: "Login Failed", message: "\(error)", buttonAction: "OK", alertColor: UIColor.blueColor())
             }
+        
         }
-    }
-    
-    func keyboardWillHide(sender: NSNotification) {
-        kbHidden = true
-        let userInfo: [NSObject : AnyObject] = sender.userInfo!
-        let _: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
-        self.view.frame.origin.y = self.viewOrigin
     }
     
 }

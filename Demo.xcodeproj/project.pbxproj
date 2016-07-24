@@ -19,6 +19,13 @@
 		71F35B4C1D41CB760084AB91 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B4B1D41CB760084AB91 /* CustomButton.swift */; };
 		71F35B4E1D41CB820084AB91 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B4D1D41CB820084AB91 /* CustomTextField.swift */; };
 		71F35B501D41CF210084AB91 /* viewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B4F1D41CF210084AB91 /* viewExtension.swift */; };
+		71F35B581D453D8D0084AB91 /* KeyboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B571D453D8D0084AB91 /* KeyboardVC.swift */; };
+		71F35B5A1D4541360084AB91 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B591D4541360084AB91 /* Reachability.swift */; };
+		71F35B5C1D454D980084AB91 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B5B1D454D980084AB91 /* ContainerViewController.swift */; };
+		71F35B5E1D4573FD0084AB91 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B5D1D4573FD0084AB91 /* SidePanelViewController.swift */; };
+		71F35B601D4574240084AB91 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B5F1D4574240084AB91 /* CenterViewController.swift */; };
+		71F35B621D4575CC0084AB91 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B611D4575CC0084AB91 /* Person.swift */; };
+		71F35B641D45780B0084AB91 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B631D45780B0084AB91 /* DateExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +43,13 @@
 		71F35B4B1D41CB760084AB91 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		71F35B4D1D41CB820084AB91 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		71F35B4F1D41CF210084AB91 /* viewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewExtension.swift; sourceTree = "<group>"; };
+		71F35B571D453D8D0084AB91 /* KeyboardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardVC.swift; sourceTree = "<group>"; };
+		71F35B591D4541360084AB91 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		71F35B5B1D454D980084AB91 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		71F35B5D1D4573FD0084AB91 /* SidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
+		71F35B5F1D4574240084AB91 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
+		71F35B611D4575CC0084AB91 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		71F35B631D45780B0084AB91 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		A65498633BFA9F760C68EE6E /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BB0E02BDEF4DBAE8356B9878 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C250C23A2236EC9AEF9D02BA /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
@@ -103,6 +117,10 @@
 			isa = PBXGroup;
 			children = (
 				71F35B3D1D41C74A0084AB91 /* LoginViewController.swift */,
+				71F35B571D453D8D0084AB91 /* KeyboardVC.swift */,
+				71F35B5B1D454D980084AB91 /* ContainerViewController.swift */,
+				71F35B5D1D4573FD0084AB91 /* SidePanelViewController.swift */,
+				71F35B5F1D4574240084AB91 /* CenterViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -111,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				71F35B4A1D41C9230084AB91 /* Demo-Bridging-Header.h */,
+				71F35B611D4575CC0084AB91 /* Person.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -119,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				71F35B421D41C8310084AB91 /* AnimationEngine.swift */,
+				71F35B591D4541360084AB91 /* Reachability.swift */,
+				71F35B631D45780B0084AB91 /* DateExtension.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -262,14 +283,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71F35B601D4574240084AB91 /* CenterViewController.swift in Sources */,
+				71F35B641D45780B0084AB91 /* DateExtension.swift in Sources */,
 				71F35B4E1D41CB820084AB91 /* CustomTextField.swift in Sources */,
 				71F35B3E1D41C74A0084AB91 /* LoginViewController.swift in Sources */,
 				71F35B2E1D41BE8B0084AB91 /* Demo.xcdatamodeld in Sources */,
+				71F35B621D4575CC0084AB91 /* Person.swift in Sources */,
 				71F35B4C1D41CB760084AB91 /* CustomButton.swift in Sources */,
+				71F35B581D453D8D0084AB91 /* KeyboardVC.swift in Sources */,
 				71F35B261D41BE8B0084AB91 /* AppDelegate.swift in Sources */,
 				71F35B431D41C8310084AB91 /* AnimationEngine.swift in Sources */,
+				71F35B5C1D454D980084AB91 /* ContainerViewController.swift in Sources */,
 				71F35B501D41CF210084AB91 /* viewExtension.swift in Sources */,
+				71F35B5A1D4541360084AB91 /* Reachability.swift in Sources */,
 				71F35B401D41C7890084AB91 /* MaterialView.swift in Sources */,
+				71F35B5E1D4573FD0084AB91 /* SidePanelViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
