@@ -25,11 +25,11 @@ class CenterViewController: UIViewController {
     
     // MARK: Button actions
     
-    @IBAction func kittiesTapped(sender: AnyObject) {
+    @IBAction func naysTapped(sender: AnyObject) {
         delegate?.toggleLeftPanel?()
     }
     
-    @IBAction func puppiesTapped(sender: AnyObject) {
+    @IBAction func yaysTapped(sender: AnyObject) {
         delegate?.toggleRightPanel?()
     }
     

@@ -30,7 +30,7 @@ class ContainerViewController: UIViewController {
     var leftViewController: SidePanelViewController?
     var rightViewController: SidePanelViewController?
     
-    let centerPanelExpandedOffset: CGFloat = 60
+    let centerPanelExpandedOffset: CGFloat = 180
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +38,6 @@ class ContainerViewController: UIViewController {
         centerViewController = UIStoryboard.centerViewController()
         centerViewController.delegate = self
         
-        // wrap the centerViewController in a navigation controller, so we can push views to it
-        // and display bar button items in the navigation bar
         centerNavigationController = UINavigationController(rootViewController: centerViewController)
         view.addSubview(centerNavigationController.view)
         addChildViewController(centerNavigationController)
@@ -91,11 +89,13 @@ extension ContainerViewController: CenterViewControllerDelegate {
         if (leftViewController == nil) {
             leftViewController = UIStoryboard.leftViewController()
             
-            if let nays = nays {
-                if nays.count > 0 {
-                    leftViewController!.people = nays
-                }
-            }
+            leftViewController!.people = Person.allPeople()
+            
+//            if let nays = nays {
+//                if nays.count > 0 {
+//                    leftViewController!.people = nays
+//                }
+//            }
             
             addChildSidePanelController(leftViewController!)
         }
@@ -114,11 +114,13 @@ extension ContainerViewController: CenterViewControllerDelegate {
         if (rightViewController == nil) {
             rightViewController = UIStoryboard.rightViewController()
             
-            if let yays = yays {
-                if yays.count > 0 {
-                    rightViewController!.people = yays
-                }
-            }
+            rightViewController!.people = Person.allPeople()
+            
+//            if let yays = yays {
+//                if yays.count > 0 {
+//                    rightViewController!.people = yays
+//                }
+//            }
             
             addChildSidePanelController(rightViewController!)
         }
