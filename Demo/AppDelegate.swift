@@ -18,12 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        let containerViewController = ContainerViewController()
+//        let containerViewController = ContainerViewController()
+//        
+//        window!.rootViewController = containerViewController
         
-        window!.rootViewController = containerViewController
-        window!.makeKeyAndVisible()
+//        let loginViewController = LoginViewController()
+//        window!.rootViewController = loginViewController
+//        
+//        window!.makeKeyAndVisible()
         
         return true
     }

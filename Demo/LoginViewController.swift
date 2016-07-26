@@ -18,15 +18,22 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
     @IBOutlet weak var passwordField: CustomTextField!
     @IBOutlet weak var loginButton: UIButton!
     
+    let containerViewController = ContainerViewController()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+        
+        
         initialLoad()
     }
     
     func initialLoad() {
+        
         
         setupKeyboardScrolling(self)
         
@@ -58,17 +65,23 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
     
     @IBAction func loginTouched(sender: AnyObject) {
         
-        if let username = self.usernameField.text, password = self.passwordField.text {
+        //bypass credentials
+//        performSegueWithIdentifier("loginHomeSegue", sender: self)
+
+        presentViewController(containerViewController, animated: true, completion: nil)
         
-            let (success, error) = simulateNetworkCall(username, password: password)
-            
-            if success {
-                performSegueWithIdentifier("loginHomeSegue", sender: self)
-            } else {
-                displayAlert("login", title: "Login Failed", message: "\(error)", buttonAction: "OK", alertColor: UIColor.blueColor())
-            }
         
-        }
+//        if let username = self.usernameField.text, password = self.passwordField.text {
+//        
+//            let (success, error) = simulateNetworkCall(username, password: password)
+//            
+//            if success {
+//                performSegueWithIdentifier("loginHomeSegue", sender: self)
+//            } else {
+//                displayAlert("login", title: "Login Failed", message: "\(error)", buttonAction: "OK", alertColor: UIColor.blueColor())
+//            }
+//        
+//        }
     }
     
 }

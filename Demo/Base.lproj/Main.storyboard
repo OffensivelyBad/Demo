@@ -9,7 +9,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -194,30 +194,22 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9v-e5-suI">
-                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
-                                <items>
-                                    <navigationItem title="Kinder" id="Y8v-4b-9MP">
-                                        <barButtonItem key="leftBarButtonItem" title="Nerp" id="Cvy-Bo-dF3">
-                                            <connections>
-                                                <action selector="naysTapped:" destination="yvr-vu-vPl" id="kmj-qV-dat"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Yerp" id="GwU-0p-vqQ">
-                                            <connections>
-                                                <action selector="yaysTapped:" destination="yvr-vu-vPl" id="GyA-Sh-xBa"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yVe-kD-1zu">
+                                <rect key="frame" x="179" y="259" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="left:" destination="yvr-vu-vPl" eventType="touchUpInside" id="6dR-ix-dom"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DPS-ob-hDg">
+                                <rect key="frame" x="332" y="259" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="right:" destination="yvr-vu-vPl" eventType="touchUpInside" id="IKf-8h-hwW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="u9v-e5-suI" secondAttribute="trailing" constant="-20" id="HcE-8l-yiX"/>
-                            <constraint firstItem="u9v-e5-suI" firstAttribute="top" secondItem="whQ-O4-mcJ" secondAttribute="bottom" id="dXl-JJ-wvu"/>
-                            <constraint firstItem="u9v-e5-suI" firstAttribute="leading" secondItem="dPI-a3-zYP" secondAttribute="leadingMargin" constant="-20" id="fSz-QP-l8i"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytb-fZ-Qgb" userLabel="First Responder" sceneMemberID="firstResponder"/>
