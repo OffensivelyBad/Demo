@@ -29,6 +29,8 @@ class SidePanelViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.reloadData()
     }
     
@@ -49,6 +51,7 @@ extension SidePanelViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(TableView.CellIdentifiers.PersonCell, forIndexPath: indexPath) as! PersonCell
         cell.configureForPerson(people[indexPath.row])
+        cell.materialDesign = true
         return cell
     }
     
@@ -63,6 +66,16 @@ extension SidePanelViewController: UITableViewDelegate {
         delegate?.personSelected(selectedPerson)
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 100
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return "People"
+        
+    }
+    
 }
 
 class PersonCell: UITableViewCell {
@@ -75,6 +88,11 @@ class PersonCell: UITableViewCell {
         personImageView.image = person.image
         imageNameLabel.text = person.name
         ageLabel.text = "\(person.age)"
+        
+        //make image round
+        personImageView.layer.cornerRadius = personImageView.frame.size.width / 2
+        personImageView.clipsToBounds = true
+        
     }
     
 }

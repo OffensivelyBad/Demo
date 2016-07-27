@@ -105,6 +105,7 @@
 		71F35B3A1D41C7250084AB91 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				71F35B571D453D8D0084AB91 /* KeyboardVC.swift */,
 				71F35B3F1D41C7890084AB91 /* MaterialView.swift */,
 				71F35B4B1D41CB760084AB91 /* CustomButton.swift */,
 				71F35B4D1D41CB820084AB91 /* CustomTextField.swift */,
@@ -117,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				71F35B3D1D41C74A0084AB91 /* LoginViewController.swift */,
-				71F35B571D453D8D0084AB91 /* KeyboardVC.swift */,
 				71F35B5B1D454D980084AB91 /* ContainerViewController.swift */,
 				71F35B5D1D4573FD0084AB91 /* SidePanelViewController.swift */,
 				71F35B5F1D4574240084AB91 /* CenterViewController.swift */,

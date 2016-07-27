@@ -8,8 +8,6 @@
 
 import UIKit
 
-var initialLoad = true
-
 @objc
 protocol CenterViewControllerDelegate {
     optional func toggleLeftPanel()
@@ -23,26 +21,12 @@ class CenterViewController: UIViewController {
     @IBOutlet weak private var nameLabel: UILabel!
     @IBOutlet weak private var ageLabel: UILabel!
     
-    var centerNavigationController: UINavigationController!
-    var loginViewController: LoginViewController!
-    
+    var initialLoad = true
+    var xFromCenter: CGFloat = 0
+    var peoplePool: Array<Person>?
     var delegate: CenterViewControllerDelegate?
-//    var delegate: CenterViewControllerDelegate?
     
     // MARK: Button actions
-    
-    @IBAction func right(sender: AnyObject) {
-        
-        delegate?.toggleRightPanel?()
-        
-    }
-    
-    @IBAction func left(sender: AnyObject) {
-        
-        delegate?.toggleLeftPanel?()
-        
-    }
-    
     
     func naysTapped(sender: AnyObject) {
         delegate?.toggleLeftPanel?()
@@ -56,17 +40,9 @@ class CenterViewController: UIViewController {
         super.viewDidLoad()
         
         setupNavigationBar()
-        
-        loginViewController = UIStoryboard.loginViewController()
-        
-//        if initialLoad {
-//            initialLoad = false
-//            self.navigationController!.pushViewController(loginViewController, animated: false)
-//            self.navigationController = UINavigationController(rootViewController: self)
-//        }
-        
-//        let vc = ContainerViewController()
-//        self.delegate = vc
+        //populate the array from all people
+        self.peoplePool = Person.allPeople()
+        addPictures()
         
     }
     
@@ -85,6 +61,79 @@ class CenterViewController: UIViewController {
     
 }
 
+//handle images
+extension CenterViewController {
+    
+    func addPictures() {
+        if let pool = self.peoplePool {
+            var randomIndex = 0
+            if pool.count > 0 {
+                randomIndex = Int(arc4random_uniform(UInt32(pool.count)))
+                //remove the person from the pool
+                self.peoplePool?.removeAtIndex(randomIndex)
+                let randomPerson = pool[randomIndex]
+                //create the imageview
+                if let image = randomPerson.image {
+                    let userImage: UIImageView = UIImageView(frame: CGRectMake(0,100, self.view.frame.width - 100, self.view.frame.height - 100))
+                    let midX = CGRectGetMidX(self.view.frame)
+                    let midY = CGRectGetMidY(self.view.frame)
+                    userImage.center = CGPointMake(midX, midY)
+                    userImage.contentMode = UIViewContentMode.ScaleAspectFit
+                    userImage.image = image
+                    userImage.materialDesign = true
+                    self.view.addSubview(userImage)
+                    let gesture = UIPanGestureRecognizer(target: self, action: #selector(CenterViewController.wasDragged(_:)))
+                    userImage.addGestureRecognizer(gesture)
+                    userImage.userInteractionEnabled = true
+                }
+            }
+        }
+    }
+    
+    func wasDragged(gesture: UIPanGestureRecognizer) {
+        
+        let translation = gesture.translationInView(self.view)
+        let image = gesture.view!
+        self.xFromCenter += translation.x
+        
+        var scale: CGFloat = min(100 / abs(xFromCenter), 1)
+        image.center = CGPoint(x: image.center.x + translation.x, y: image.center.y)
+        gesture.setTranslation(CGPointZero, inView: self.view)
+        let rotation:CGAffineTransform = CGAffineTransformMakeRotation(xFromCenter / 200)
+        let stretch:CGAffineTransform = CGAffineTransformScale(rotation, scale, scale)
+        image.transform = stretch
+        
+        if gesture.state == UIGestureRecognizerState.Ended {
+            
+            func recycle() {
+                image.removeFromSuperview()
+                addPictures()
+            }
+            
+            if image.center.x < 100 {
+                print("not chosen")
+                recycle()
+            } else if image.center.x > self.view.bounds.width - 100 {
+                print("chosen")
+                recycle()
+            } else {
+                UIView.animateWithDuration(0.1, animations: { () -> Void in
+                    let midX = CGRectGetMidX(self.view.frame)
+                    let midY = CGRectGetMidY(self.view.frame)
+                    image.center = CGPointMake(midX, midY)
+                    scale = 1
+                    let rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
+                    let stretch:CGAffineTransform = CGAffineTransformScale(rotation, scale, scale)
+                    image.transform = stretch
+                })
+            }
+            self.xFromCenter = 0
+        }
+        
+    }
+    
+}
+
 extension CenterViewController: SidePanelViewControllerDelegate {
     func personSelected(person: Person) {
         imageView.image = person.image
@@ -95,18 +144,4 @@ extension CenterViewController: SidePanelViewControllerDelegate {
         delegate?.toggleRightPanel?()
         delegate?.collapseSidePanels?()
     }
-}
-
-private extension UIStoryboard {
-    
-    class func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()) }
-    
-    class func centerViewController() -> CenterViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("CenterViewController") as? CenterViewController
-    }
-    
-    class func loginViewController() -> LoginViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
-    }
-    
 }
