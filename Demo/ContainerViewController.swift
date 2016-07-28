@@ -94,20 +94,23 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func addLeftPanelViewController() {
         if (leftViewController == nil) {
             leftViewController = UIStoryboard.leftViewController()
-            
-            leftViewController!.people = Person.allPeople()
-            
-//            if let nays = nays {
-//                if nays.count > 0 {
-//                    leftViewController!.people = nays
-//                }
-//            }
-            
             addChildSidePanelController(leftViewController!)
         }
     }
     
     func addChildSidePanelController(sidePanelController: SidePanelViewController) {
+        
+        if let yays = yays {
+            if yays.count > 0 {
+                rightViewController?.people = yays
+            }
+        }
+        if let nays = nays {
+            if nays.count > 0 {
+                leftViewController?.people = nays
+            }
+        }
+        
         sidePanelController.delegate = centerViewController
         
         view.insertSubview(sidePanelController.view, atIndex: 0)
@@ -119,15 +122,6 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func addRightPanelViewController() {
         if (rightViewController == nil) {
             rightViewController = UIStoryboard.rightViewController()
-            
-            rightViewController!.people = Person.allPeople()
-            
-//            if let yays = yays {
-//                if yays.count > 0 {
-//                    rightViewController!.people = yays
-//                }
-//            }
-            
             addChildSidePanelController(rightViewController!)
         }
     }
@@ -178,8 +172,9 @@ extension ContainerViewController: CenterViewControllerDelegate {
     
 }
 
-extension ContainerViewController: UIGestureRecognizerDelegate {
+
     // MARK: Gesture recognizer
+extension ContainerViewController: UIGestureRecognizerDelegate {
     
     func handlePanGesture(recognizer: UIPanGestureRecognizer) {
         let gestureIsDraggingFromLeftToRight = (recognizer.velocityInView(view).x > 0)

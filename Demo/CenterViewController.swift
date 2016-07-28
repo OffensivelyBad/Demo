@@ -24,7 +24,9 @@ class CenterViewController: UIViewController {
     var initialLoad = true
     var xFromCenter: CGFloat = 0
     var peoplePool: Array<Person>?
+    var selectedPerson: Person?
     var delegate: CenterViewControllerDelegate?
+    var placeholderImage = UIImage(named: "wristlylogo.png")
     
     // MARK: Button actions
     
@@ -71,21 +73,22 @@ extension CenterViewController {
                 randomIndex = Int(arc4random_uniform(UInt32(pool.count)))
                 //remove the person from the pool
                 self.peoplePool?.removeAtIndex(randomIndex)
-                let randomPerson = pool[randomIndex]
+                self.selectedPerson = pool[randomIndex]
                 //create the imageview
-                if let image = randomPerson.image {
-                    let userImage: UIImageView = UIImageView(frame: CGRectMake(0,100, self.view.frame.width - 100, self.view.frame.height - 100))
-                    let midX = CGRectGetMidX(self.view.frame)
-                    let midY = CGRectGetMidY(self.view.frame)
-                    userImage.center = CGPointMake(midX, midY)
-                    userImage.contentMode = UIViewContentMode.ScaleAspectFit
-                    userImage.image = image
-                    userImage.materialDesign = true
-                    self.view.addSubview(userImage)
-                    let gesture = UIPanGestureRecognizer(target: self, action: #selector(CenterViewController.wasDragged(_:)))
-                    userImage.addGestureRecognizer(gesture)
-                    userImage.userInteractionEnabled = true
+                if let image = self.selectedPerson!.image {
+                    let userImage = createImage()
+                    let centeredImage = centerImage(userImage)
+                    centeredImage.image = image
+                    centeredImage.materialDesign = true
+                    self.view.addSubview(centeredImage)
+                    addGesture(centeredImage)
                 }
+            } else {
+                let placeholderImageView = createImage()
+                let centeredImage = centerImage(placeholderImageView)
+                centeredImage.image = self.placeholderImage
+                centeredImage.materialDesign = true
+                self.view.addSubview(centeredImage)
             }
         }
     }
@@ -93,7 +96,7 @@ extension CenterViewController {
     func wasDragged(gesture: UIPanGestureRecognizer) {
         
         let translation = gesture.translationInView(self.view)
-        let image = gesture.view!
+        let image = gesture.view! as! UIImageView
         self.xFromCenter += translation.x
         
         var scale: CGFloat = min(100 / abs(xFromCenter), 1)
@@ -112,24 +115,47 @@ extension CenterViewController {
             
             if image.center.x < 100 {
                 print("not chosen")
+                if let person = self.selectedPerson {
+                    nays?.append(person)
+                }
                 recycle()
             } else if image.center.x > self.view.bounds.width - 100 {
                 print("chosen")
+                if let person = self.selectedPerson {
+                    yays?.append(person)
+                }
                 recycle()
             } else {
                 UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    let midX = CGRectGetMidX(self.view.frame)
-                    let midY = CGRectGetMidY(self.view.frame)
-                    image.center = CGPointMake(midX, midY)
+                    let centeredImage = self.centerImage(image)
                     scale = 1
                     let rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
                     let stretch:CGAffineTransform = CGAffineTransformScale(rotation, scale, scale)
-                    image.transform = stretch
+                    centeredImage.transform = stretch
                 })
             }
             self.xFromCenter = 0
         }
         
+    }
+    
+    func createImage() -> UIImageView {
+        let image: UIImageView = UIImageView(frame: CGRectMake(0,100, self.view.frame.width - 100, self.view.frame.height - 100))
+        return image
+    }
+    
+    func centerImage(image: UIImageView) -> UIImageView {
+        let midX = CGRectGetMidX(self.view.frame)
+        let midY = CGRectGetMidY(self.view.frame)
+        image.center = CGPointMake(midX, midY)
+        image.contentMode = UIViewContentMode.ScaleAspectFit
+        return image
+    }
+    
+    func addGesture(image: UIImageView) {
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(CenterViewController.wasDragged(_:)))
+        image.addGestureRecognizer(gesture)
+        image.userInteractionEnabled = true
     }
     
 }

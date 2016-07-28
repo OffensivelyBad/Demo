@@ -142,7 +142,7 @@
         <!--Left View Controller-->
         <scene sceneID="mko-MT-etm">
             <objects>
-                <viewController storyboardIdentifier="LeftViewController" title="Left View Controller" id="Otm-jd-8Gq" customClass="SidePanelViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LeftViewController" title="Left View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Otm-jd-8Gq" customClass="SidePanelViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fNt-Je-XkM"/>
                         <viewControllerLayoutGuide type="bottom" id="5fa-8Y-U4A"/>
@@ -179,7 +179,7 @@
                                                                 <constraint firstAttribute="height" constant="25" id="gAe-kg-Rdu"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dkS-ID-QRq">
@@ -191,7 +191,7 @@
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="78" id="zly-he-izx"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -302,7 +302,7 @@
         <!--Right View Controller-->
         <scene sceneID="aXA-Ba-CTF">
             <objects>
-                <viewController storyboardIdentifier="RightViewController" title="Right View Controller" id="Raf-2j-9l0" customClass="SidePanelViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RightViewController" title="Right View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Raf-2j-9l0" customClass="SidePanelViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uhg-4S-1Xt"/>
                         <viewControllerLayoutGuide type="bottom" id="gWN-zB-sDC"/>
@@ -339,7 +339,7 @@
                                                                 <constraint firstAttribute="height" constant="25" id="XrG-xq-bJ2"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L1S-Rv-wNW">
@@ -349,7 +349,7 @@
                                                                 <constraint firstAttribute="height" constant="25" id="vC8-WX-fRe"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>

@@ -18,7 +18,7 @@ class SidePanelViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var delegate: SidePanelViewControllerDelegate?
     
-    var people: Array<Person>!
+    var people: Array<Person>?
     
     struct TableView {
         struct CellIdentifiers {
@@ -29,9 +29,12 @@ class SidePanelViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.reloadData()
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {        
+        self.tableView.reloadData()
     }
     
 }
@@ -45,12 +48,16 @@ extension SidePanelViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return people.count
+        var count = 0
+        if let people = self.people {
+            count = people.count
+        }
+        return count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(TableView.CellIdentifiers.PersonCell, forIndexPath: indexPath) as! PersonCell
-        cell.configureForPerson(people[indexPath.row])
+        cell.configureForPerson(people![indexPath.row])
         cell.materialDesign = true
         return cell
     }
@@ -62,7 +69,7 @@ extension SidePanelViewController: UITableViewDataSource {
 extension SidePanelViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedPerson = people[indexPath.row]
+        let selectedPerson = people![indexPath.row]
         delegate?.personSelected(selectedPerson)
     }
     
@@ -70,13 +77,30 @@ extension SidePanelViewController: UITableViewDelegate {
         return 100
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let title = UILabel()
+        title.backgroundColor = UIColor.lightGrayColor()
+        title.textColor = UIColor.whiteColor()
         
-        return "People"
+        if self.restorationIdentifier == "RightViewController" {
+            title.text = "Yerps "
+            title.textAlignment = NSTextAlignment.Right
+        } else {
+            title.text = " Nerps"
+        }
+        
+        return title
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return 50.0
         
     }
     
 }
+
+// Mark: Configure Table View Cell
 
 class PersonCell: UITableViewCell {
     

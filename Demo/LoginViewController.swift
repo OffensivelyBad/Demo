@@ -26,14 +26,13 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        
-        
-        
         initialLoad()
     }
     
     func initialLoad() {
         
+        nays = Array<Person>()
+        yays = Array<Person>()
         
         setupKeyboardScrolling(self)
         
