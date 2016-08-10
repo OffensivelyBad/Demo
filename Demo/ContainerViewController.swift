@@ -13,6 +13,7 @@ enum SlideOutState {
     case BothCollapsed
     case LeftPanelExpanded
     case RightPanelExpanded
+    case Disabled
 }
 
 class ContainerViewController: UIViewController {

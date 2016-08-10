@@ -270,34 +270,27 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nwq-cM-k13">
-                                <rect key="frame" x="180" y="236" width="240" height="128"/>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kYR-ho-228">
+                                <rect key="frame" x="260" y="540" width="81" height="30"/>
+                                <state key="normal" title="View Profile"/>
+                                <connections>
+                                    <action selector="viewProfileTapped:" destination="yvr-vu-vPl" eventType="touchUpInside" id="BKP-iL-Eq0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kYR-ho-228" firstAttribute="centerX" secondItem="dPI-a3-zYP" secondAttribute="centerX" id="RmA-fB-yMD"/>
+                            <constraint firstItem="IQb-60-X0D" firstAttribute="top" secondItem="kYR-ho-228" secondAttribute="bottom" constant="30" id="mw0-Or-tpD"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="viewProfileButton" destination="kYR-ho-228" id="v5C-2c-ZUA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytb-fZ-Qgb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="422" y="1092"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="DW6-Wr-Dw1">
-            <objects>
-                <viewController id="C0F-ug-CdS" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="9Go-nR-4se"/>
-                        <viewControllerLayoutGuide type="bottom" id="1Db-cB-reZ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="9Re-fh-INX">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QqN-q2-f50" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="422" y="1788"/>
         </scene>
         <!--Right View Controller-->
         <scene sceneID="aXA-Ba-CTF">

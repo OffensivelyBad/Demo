@@ -17,9 +17,10 @@ protocol CenterViewControllerDelegate {
 
 class CenterViewController: UIViewController {
     
-    @IBOutlet weak private var imageView: UIImageView!
-    @IBOutlet weak private var nameLabel: UILabel!
-    @IBOutlet weak private var ageLabel: UILabel!
+    weak private var imageView: UIImageView!
+    weak private var nameLabel: UILabel!
+    weak private var ageLabel: UILabel!
+    @IBOutlet weak var viewProfileButton: UIButton!
     
     var initialLoad = true
     var xFromCenter: CGFloat = 0
@@ -27,6 +28,7 @@ class CenterViewController: UIViewController {
     var selectedPerson: Person?
     var delegate: CenterViewControllerDelegate?
     var placeholderImage = UIImage(named: "wristlylogo.png")
+
     
     // MARK: Button actions
     
@@ -59,6 +61,57 @@ class CenterViewController: UIViewController {
         let yaysButton = UIBarButtonItem(title: "Yays", style: .Plain, target: self, action: #selector(CenterViewController.yaysTapped(_:)))
         self.navigationItem.rightBarButtonItem = yaysButton
         
+    }
+    
+}
+
+//handle profile button
+extension CenterViewController {
+    
+    @IBAction func viewProfileTapped(sender: AnyObject) {
+        
+        openProfile()
+        
+    }
+    
+    func openProfile() {
+        createProfileView()
+    }
+    
+    func createProfileView() {
+        let profileRect = self.view.frame
+        let profileView = UIView(frame: CGRectMake(profileRect.midX,profileRect.midY, profileRect.width - 20, profileRect.height - 200))
+        profileView.backgroundColor = UIColor.blueColor()
+        profileView.center = self.view.center
+        profileView.alpha = 0
+        profileView.layer.cornerRadius = 10
+        self.view.addSubview(profileView)
+        fadeView(self.view, duration: 1.0, alpha: 0.8)
+        fadeView(self.navigationController!.navigationBar, duration: 1.0, alpha: 0.0)
+        fadeView(profileView, duration: 1.0, alpha: 1.0)
+        fadeView(viewProfileButton, duration: 1.0, alpha: 0.0)
+        viewProfileButton.hidden = true
+    }
+    
+    func dismissProfileView() {
+        
+        viewProfileButton.hidden = false
+        fadeView(viewProfileButton, duration: 1.0, alpha: 1.0)
+        fadeView(self.view, duration: 1.0, alpha: 1.0)
+        fadeView(self.navigationController!.navigationBar, duration: 1.0, alpha: 1.0)
+        
+    }
+    
+    func fadeView(view: UIView, duration: Double, alpha: CGFloat) {
+        UIView.animateWithDuration(duration, animations: { () -> Void in
+            
+            view.alpha = alpha
+            
+        }) { (complete) -> Void in
+            if complete {
+                
+            }
+        }
     }
     
 }
