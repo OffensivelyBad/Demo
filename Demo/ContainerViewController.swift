@@ -49,8 +49,8 @@ class ContainerViewController: UIViewController {
         
         centerNavigationController.didMoveToParentViewController(self)
         
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
-        centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
+//        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
+//        centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
         
     }
     
@@ -173,6 +173,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
     
 }
 
+/*
 
     // MARK: Gesture recognizer
 extension ContainerViewController: UIGestureRecognizerDelegate {
@@ -208,6 +209,7 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
         }
     }
 }
+ */
 
 private extension UIStoryboard {
     class func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()) }
