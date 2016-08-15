@@ -21,6 +21,13 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     weak private var nameLabel: UILabel!
     weak private var ageLabel: UILabel!
     @IBOutlet weak var viewProfileButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var profileName: UILabel!
+    @IBOutlet weak var profileAge: UILabel!
+    @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
+    
     
     var initialLoad = true
     var xFromCenter: CGFloat = 0
@@ -47,6 +54,9 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         //populate the array from all people
         self.peoplePool = Person.allPeople()
         addPictures()
+        
+        self.scrollView.hidden = true
+        self.scrollView.alpha = 0
         
     }
     
@@ -76,94 +86,43 @@ extension CenterViewController {
     
     func openProfile() {
         //pop open the profile view
-        createProfileView()
+        self.view.bringSubviewToFront(self.scrollView)
+        self.view.bringSubviewToFront(self.stackView)
+        self.scrollView.layer.cornerRadius = 10
+        self.scrollView.backgroundColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+        self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
+        self.profileImage.clipsToBounds = true
+        
+        toggleViews([self.scrollView, self.viewProfileButton, (self.navigationController?.navigationBar)!])
+        
+        populateTestData()
     }
     
-    func createProfileView() {
+    func toggleViews(views: [UIView]) {
         
-        let image = UIImageView(image: UIImage(named: "DrunkCowboy.jpg"))
-        let title = UILabel()
-        title.text = "DrunkCowboy"
-        let age = UILabel()
-        age.text = "33"
-        let dismissButton = UIButton()
-        dismissButton.titleLabel?.text = "dismiss"
-        
-        let profileRect = self.view.frame
-        let profileView = UIView(frame: CGRectMake(profileRect.midX,profileRect.midY, profileRect.width - 20, profileRect.height - 200))
-        profileView.backgroundColor = UIColor.blueColor()
-        profileView.center = self.view.center
-        profileView.alpha = 0
-        profileView.layer.cornerRadius = 10
-        
-        let stackRect = profileView.frame
-        
-        let scrollView = UIScrollView(frame: CGRectMake(stackRect.midX, stackRect.midY, stackRect.width - 10, stackRect.height - 10))
-        scrollView.delegate = self
-        scrollView.center = profileView.center
-        scrollView.backgroundColor = UIColor.whiteColor()
-        
-        let stackView = UIStackView(arrangedSubviews: [image, title, age, dismissButton])
-        stackView.axis = .Vertical
-        stackView.distribution = .FillEqually
-        stackView.alignment = .Fill
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.frame = scrollView.frame
-        stackView.center = scrollView.center
-        
-        scrollView.addSubview(stackView)
-        profileView.addSubview(scrollView)
-        
-//        let heightConstraint = NSLayoutConstraint(
-//            item: loginFBButton,
-//            attribute: NSLayoutAttribute.Height,
-//            relatedBy: NSLayoutRelation.Equal,
-//            toItem: nil,
-//            attribute: NSLayoutAttribute.NotAnAttribute,
-//            multiplier: 1,
-//            constant: 41)
-//        let topConstraint = NSLayoutConstraint(
-//            item: loginFBButton,
-//            attribute: NSLayoutAttribute.TopMargin,
-//            relatedBy: NSLayoutRelation.Equal,
-//            toItem: self.orLbl,
-//            attribute: NSLayoutAttribute.BottomMargin,
-//            multiplier: 1,
-//            constant: 31)
-//        let leadingConstraint = NSLayoutConstraint(
-//            item: loginFBButton,
-//            attribute: NSLayoutAttribute.Leading,
-//            relatedBy: NSLayoutRelation.Equal,
-//            toItem: self.registerButton,
-//            attribute: NSLayoutAttribute.Left,
-//            multiplier: 1,
-//            constant: 0)
-//        let trailingConstraint = NSLayoutConstraint(
-//            item: loginFBButton,
-//            attribute: NSLayoutAttribute.Leading,
-//            relatedBy: NSLayoutRelation.Equal,
-//            toItem: self.registerButton,
-//            attribute: NSLayoutAttribute.Right,
-//            multiplier: 1,
-//            constant: 0)
-        
-        
-        self.view.addSubview(profileView)
-        fadeView(self.view, duration: 1.0, alpha: 0.8)
-        fadeView(self.navigationController!.navigationBar, duration: 1.0, alpha: 0.0)
-        fadeView(profileView, duration: 1.0, alpha: 1.0)
-        fadeView(viewProfileButton, duration: 1.0, alpha: 0.0)
-        viewProfileButton.hidden = true
+        for view in views {
+            if view.hidden {
+                view.hidden = false
+                fadeView(view, duration: 0.5, alpha: 1.0)
+            } else {
+                fadeView(view, duration: 0.5, alpha: 0.0)
+            }
+        }
         
     }
     
-    func dismissProfileView() {
+    func populateTestData() {
         
-        viewProfileButton.hidden = false
-        fadeView(viewProfileButton, duration: 1.0, alpha: 1.0)
-        fadeView(self.view, duration: 1.0, alpha: 1.0)
-        fadeView(self.navigationController!.navigationBar, duration: 1.0, alpha: 1.0)
+        let image = UIImage(named: "DrunkCowboy.jpg")
+        self.profileImage.image = image
+        self.profileName.text = "DrunkCowboy"
+        self.profileAge.text = "33"
+        
+    }
+    
+    @IBAction func dismissProfileView() {
+        
+        toggleViews([self.scrollView, self.viewProfileButton, (self.navigationController?.navigationBar)!])
         
     }
     
@@ -174,7 +133,9 @@ extension CenterViewController {
             
         }) { (complete) -> Void in
             if complete {
-                
+                if alpha == 0.0 {
+                    view.hidden = true
+                }
             }
         }
     }
