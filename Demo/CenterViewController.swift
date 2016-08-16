@@ -26,8 +26,7 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileAge: UILabel!
     @IBOutlet weak var dismissButton: UIButton!
-    @IBOutlet weak var stackView: UIStackView!
-    
+    @IBOutlet weak var stackView: UIStackView!   
     
     var initialLoad = true
     var xFromCenter: CGFloat = 0
@@ -35,6 +34,7 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     var selectedPerson: Person?
     var delegate: CenterViewControllerDelegate?
     var placeholderImage = UIImage(named: "wristlylogo.png")
+    var personWasSelected = false
 
     
     // MARK: Button actions
@@ -98,19 +98,6 @@ extension CenterViewController {
         populateTestData()
     }
     
-    func toggleViews(views: [UIView]) {
-        
-        for view in views {
-            if view.hidden {
-                view.hidden = false
-                fadeView(view, duration: 0.5, alpha: 1.0)
-            } else {
-                fadeView(view, duration: 0.5, alpha: 0.0)
-            }
-        }
-        
-    }
-    
     func populateTestData() {
         
         let image = UIImage(named: "DrunkCowboy.jpg")
@@ -123,6 +110,24 @@ extension CenterViewController {
     @IBAction func dismissProfileView() {
         
         toggleViews([self.scrollView, self.viewProfileButton, (self.navigationController?.navigationBar)!])
+        
+    }
+    
+}
+
+//handle view visibility
+extension CenterViewController {
+    
+    func toggleViews(views: [UIView]) {
+        
+        for view in views {
+            if view.hidden {
+                view.hidden = false
+                fadeView(view, duration: 0.5, alpha: 1.0)
+            } else {
+                fadeView(view, duration: 0.5, alpha: 0.0)
+            }
+        }
         
     }
     
@@ -146,10 +151,20 @@ extension CenterViewController {
 extension CenterViewController {
     
     func addPictures() {
+        
+        for view in self.view.subviews {
+            if view is UIImageView {
+                view.removeFromSuperview()
+            }
+        }
+        
         if let pool = self.peoplePool {
             var randomIndex = 0
             if pool.count > 0 {
-                randomIndex = Int(arc4random_uniform(UInt32(pool.count)))
+                //if person was not selected, get random index, otherwise use the first person in the array
+                if !personWasSelected {
+                    randomIndex = Int(arc4random_uniform(UInt32(pool.count)))
+                }
                 //remove the person from the pool
                 self.peoplePool?.removeAtIndex(randomIndex)
                 self.selectedPerson = pool[randomIndex]
@@ -170,6 +185,7 @@ extension CenterViewController {
                 self.view.addSubview(centeredImage)
             }
         }
+        personWasSelected = false
     }
     
     func wasDragged(gesture: UIPanGestureRecognizer) {
@@ -193,15 +209,46 @@ extension CenterViewController {
             }
             
             if image.center.x < 100 {
-                print("not chosen")
                 if let person = self.selectedPerson {
-                    nays?.append(person)
+                    //if the person is already in an array, delete them
+                    if yays?.count > 0 {
+                        if yays!.contains({ $0 === person }) {
+                            for x in 0..<yays!.count {
+                                if yays![x] === person {
+                                    yays!.removeAtIndex(x)
+                                }
+                            }
+                        }
+                    }
+                    if nays?.count > 0 {
+                        if !nays!.contains({ $0 === person }) {
+                            nays!.append(person)
+                        }
+                    } else {
+                        nays?.append(person)
+                    }
                 }
                 recycle()
             } else if image.center.x > self.view.bounds.width - 100 {
                 print("chosen")
                 if let person = self.selectedPerson {
-                    yays?.append(person)
+                    //if the person is already in an array, delete them
+                    if nays?.count > 0 {
+                        if nays!.contains({ $0 === person }) {
+                            for ix in 0..<nays!.count {
+                                if nays![ix] === person {
+                                    nays!.removeAtIndex(ix)
+                                }
+                            }
+                        }
+                    }
+                    if yays?.count > 0 {
+                        if !yays!.contains({ $0 === person }) {
+                            yays!.append(person)
+                        }
+                    } else {
+                        yays?.append(person)
+                    }
                 }
                 recycle()
             } else {
@@ -241,12 +288,13 @@ extension CenterViewController {
 
 extension CenterViewController: SidePanelViewControllerDelegate {
     func personSelected(person: Person) {
-        imageView.image = person.image
-        nameLabel.text = person.name
-        ageLabel.text = "\(person.age)"
+        self.peoplePool?.insert(person, atIndex: 0)
+        self.personWasSelected = true
         
-        delegate?.toggleLeftPanel?()
-        delegate?.toggleRightPanel?()
+//        delegate?.toggleLeftPanel?()
+//        delegate?.toggleRightPanel?()
         delegate?.collapseSidePanels?()
+        
+        addPictures()
     }
 }

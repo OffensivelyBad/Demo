@@ -16,6 +16,9 @@ enum SlideOutState {
     case Disabled
 }
 
+var nays: Array<Person>?
+var yays: Array<Person>?
+
 class ContainerViewController: UIViewController {
     
     var centerNavigationController: UINavigationController!

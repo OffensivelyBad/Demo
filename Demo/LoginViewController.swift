@@ -8,9 +8,6 @@
 
 import UIKit
 
-var nays: Array<Person>?
-var yays: Array<Person>?
-
 class LoginViewController: KeyboardVC, UITextFieldDelegate {
     
     @IBOutlet weak var titleLabel: UILabel!
