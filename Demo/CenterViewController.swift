@@ -35,6 +35,7 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     var delegate: CenterViewControllerDelegate?
     var placeholderImage = UIImage(named: "wristlylogo.png")
     var personWasSelected = false
+    var animationEngine: AnimationEngine!
 
     
     // MARK: Button actions
@@ -75,7 +76,7 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     
 }
 
-//handle profile button
+//handle profile view
 extension CenterViewController {
     
     @IBAction func viewProfileTapped(sender: AnyObject) {
@@ -95,7 +96,8 @@ extension CenterViewController {
         
         toggleViews([self.scrollView, self.viewProfileButton, (self.navigationController?.navigationBar)!])
         
-        populateTestData()
+        populateProfileData()
+//        populateTestData()
     }
     
     func populateTestData() {
@@ -105,6 +107,14 @@ extension CenterViewController {
         self.profileName.text = "DrunkCowboy"
         self.profileAge.text = "33"
         
+    }
+    
+    func populateProfileData() {
+        if let person = self.selectedPerson {
+            self.profileImage.image = person.image
+            self.profileName.text = person.name
+            self.profileAge.text = "\(person.age)"
+        }
     }
     
     @IBAction func dismissProfileView() {
@@ -165,17 +175,14 @@ extension CenterViewController {
                 if !personWasSelected {
                     randomIndex = Int(arc4random_uniform(UInt32(pool.count)))
                 }
-                //remove the person from the pool
-                self.peoplePool?.removeAtIndex(randomIndex)
                 self.selectedPerson = pool[randomIndex]
                 //create the imageview
                 if let image = self.selectedPerson!.image {
                     let userImage = createImage()
-                    let centeredImage = centerImage(userImage)
-                    centeredImage.image = image
-                    centeredImage.materialDesign = true
-                    self.view.addSubview(centeredImage)
-                    addGesture(centeredImage)
+                    userImage.image = image
+                    addGesture(userImage)
+                    self.view.addSubview(userImage)
+                    setImageConstraints(userImage)
                 }
             } else {
                 let placeholderImageView = createImage()
@@ -194,6 +201,10 @@ extension CenterViewController {
         let image = gesture.view! as! UIImageView
         self.xFromCenter += translation.x
         
+        //remove the constraints but hold the view in place
+        image.removeConstraints(image.constraints)
+        image.translatesAutoresizingMaskIntoConstraints = true
+        
         var scale: CGFloat = min(100 / abs(xFromCenter), 1)
         image.center = CGPoint(x: image.center.x + translation.x, y: image.center.y)
         gesture.setTranslation(CGPointZero, inView: self.view)
@@ -204,51 +215,27 @@ extension CenterViewController {
         if gesture.state == UIGestureRecognizerState.Ended {
             
             func recycle() {
+                //remove the person from the pool
+                if self.peoplePool?.count > 0 {
+                    for i in 0..<self.peoplePool!.count {
+                        if peoplePool![i] === self.selectedPerson {
+                            peoplePool!.removeAtIndex(i)
+                            break
+                        }
+                    }
+                }
                 image.removeFromSuperview()
                 addPictures()
             }
             
             if image.center.x < 100 {
                 if let person = self.selectedPerson {
-                    //if the person is already in an array, delete them
-                    if yays?.count > 0 {
-                        if yays!.contains({ $0 === person }) {
-                            for x in 0..<yays!.count {
-                                if yays![x] === person {
-                                    yays!.removeAtIndex(x)
-                                }
-                            }
-                        }
-                    }
-                    if nays?.count > 0 {
-                        if !nays!.contains({ $0 === person }) {
-                            nays!.append(person)
-                        }
-                    } else {
-                        nays?.append(person)
-                    }
+                    nays?.append(person)
                 }
                 recycle()
             } else if image.center.x > self.view.bounds.width - 100 {
-                print("chosen")
                 if let person = self.selectedPerson {
-                    //if the person is already in an array, delete them
-                    if nays?.count > 0 {
-                        if nays!.contains({ $0 === person }) {
-                            for ix in 0..<nays!.count {
-                                if nays![ix] === person {
-                                    nays!.removeAtIndex(ix)
-                                }
-                            }
-                        }
-                    }
-                    if yays?.count > 0 {
-                        if !yays!.contains({ $0 === person }) {
-                            yays!.append(person)
-                        }
-                    } else {
-                        yays?.append(person)
-                    }
+                    yays?.append(person)
                 }
                 recycle()
             } else {
@@ -266,15 +253,30 @@ extension CenterViewController {
     }
     
     func createImage() -> UIImageView {
-        let image: UIImageView = UIImageView(frame: CGRectMake(0,100, self.view.frame.width - 100, self.view.frame.height - 100))
+        let image: UIImageView = UIImageView(frame: CGRectMake(0,0, self.view.frame.width - 100, self.view.frame.height - 100))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        
         return image
     }
     
+    func setImageConstraints(image: UIImageView) {
+        image.contentMode = UIViewContentMode.ScaleAspectFit
+        let widthConstraint = NSLayoutConstraint(item: image, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.view.frame.width - 100)
+        let heightConstraint = NSLayoutConstraint(item: image, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.view.frame.height - 100)
+        let xConstraint = NSLayoutConstraint(item: image, attribute: .CenterX, relatedBy: .Equal, toItem: self.view, attribute: .CenterX, multiplier: 1, constant: 0)
+        let yConstraint = NSLayoutConstraint(item: image, attribute: .CenterY, relatedBy: .Equal, toItem: self.view, attribute: .CenterY, multiplier: 1, constant: 0)
+        NSLayoutConstraint.activateConstraints([xConstraint, yConstraint, widthConstraint, heightConstraint])
+        self.animationEngine = AnimationEngine(constraints: [yConstraint], effect: "slideFromTop")
+        self.animationEngine.animateOnScreen(0)
+    }
+    
     func centerImage(image: UIImageView) -> UIImageView {
+        image.contentMode = UIViewContentMode.ScaleAspectFit
+        image.translatesAutoresizingMaskIntoConstraints = true
         let midX = CGRectGetMidX(self.view.frame)
         let midY = CGRectGetMidY(self.view.frame)
         image.center = CGPointMake(midX, midY)
-        image.contentMode = UIViewContentMode.ScaleAspectFit
+        
         return image
     }
     
@@ -291,8 +293,29 @@ extension CenterViewController: SidePanelViewControllerDelegate {
         self.peoplePool?.insert(person, atIndex: 0)
         self.personWasSelected = true
         
-//        delegate?.toggleLeftPanel?()
-//        delegate?.toggleRightPanel?()
+        //remove the person from nays
+        if nays?.count > 0 {
+            if nays!.contains({ $0 === person }) {
+                for i in 0..<nays!.count {
+                    if nays![i] === person {
+                        nays!.removeAtIndex(i)
+                        break
+                    }
+                }
+            }
+        }
+        //remove the person from nays
+        if yays?.count > 0 {
+            if yays!.contains({ $0 === person }) {
+                for i in 0..<yays!.count {
+                    if yays![i] === person {
+                        yays!.removeAtIndex(i)
+                        break
+                    }
+                }
+            }
+        }
+        
         delegate?.collapseSidePanels?()
         
         addPictures()

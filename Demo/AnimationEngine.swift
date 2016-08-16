@@ -19,6 +19,14 @@ class AnimationEngine {
         return CGPointMake(-UIScreen.mainScreen().bounds.width, CGRectGetMidY(UIScreen.mainScreen().bounds))
     }
     
+    class var offScreenTopPosition: CGPoint {
+        return CGPointMake(CGRectGetMidX(UIScreen.mainScreen().bounds), -UIScreen.mainScreen().bounds.height)
+    }
+    
+    class var offScreenBottomPosition: CGPoint {
+        return CGPointMake(CGRectGetMidX(UIScreen.mainScreen().bounds), UIScreen.mainScreen().bounds.height)
+    }
+    
     class var screenCenterPosition: CGPoint {
         return CGPointMake(CGRectGetMidX(UIScreen.mainScreen().bounds), CGRectGetMidY(UIScreen.mainScreen().bounds))
     }
@@ -34,6 +42,10 @@ class AnimationEngine {
                 con.constant = AnimationEngine.offScreenRightPosition.x
             } else if effect == "slideFromLeft" {
                 con.constant = AnimationEngine.offScreenLeftPosition.x
+            } else if effect == "slideFromTop" {
+                con.constant = AnimationEngine.offScreenTopPosition.y
+            } else if effect == "slideFromBottom" {
+                con.constant = AnimationEngine.offScreenBottomPosition.y
             }
         }
         
