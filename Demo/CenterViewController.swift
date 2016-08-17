@@ -36,6 +36,8 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     var placeholderImage = UIImage(named: "wristlylogo.png")
     var personWasSelected = false
     var animationEngine: AnimationEngine!
+    var navBarHeight: CGFloat = 50.0
+    var titleFont: UIFont? = UIFont(name: "HelveticaNeue", size: 22)
 
     
     // MARK: Button actions
@@ -54,16 +56,28 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         setupNavigationBar()
         //populate the array from all people
         self.peoplePool = Person.allPeople()
-        addPictures()
         
         self.scrollView.hidden = true
         self.scrollView.alpha = 0
+        self.view.bringSubviewToFront(self.viewProfileButton)
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        addPictures()
     }
     
     func setupNavigationBar() {
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.materialDesign = true
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+        if let titleFont = self.titleFont {
+            self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: titleFont, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        }
         
         self.navigationItem.setHidesBackButton(true, animated: false)
         let naysButton = UIBarButtonItem(title: "Nays", style: .Plain, target: self, action: #selector(CenterViewController.naysTapped(_:)))
@@ -129,6 +143,16 @@ extension CenterViewController {
 extension CenterViewController {
     
     func toggleViews(views: [UIView]) {
+        
+        if let navBar = self.navigationController?.navigationBar {
+        
+            if navBar.translucent {
+                self.navigationController?.navigationBar.translucent = false
+            } else {
+                self.navigationController?.navigationBar.translucent = true
+            }
+            
+        }
         
         for view in views {
             if view.hidden {
@@ -255,6 +279,7 @@ extension CenterViewController {
     func createImage() -> UIImageView {
         let image: UIImageView = UIImageView(frame: CGRectMake(0,0, self.view.frame.width - 100, self.view.frame.height - 100))
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.materialDesign = true
         
         return image
     }

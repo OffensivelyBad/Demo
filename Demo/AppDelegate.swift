@@ -29,6 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        
 //        window!.makeKeyAndVisible()
         
+//        let addStatusBar = UIView()
+//        addStatusBar.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 20)
+//        addStatusBar.backgroundColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+//        self.window?.rootViewController?.view .addSubview(addStatusBar)
+        
+        
         return true
     }
 

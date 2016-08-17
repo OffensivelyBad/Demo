@@ -63,8 +63,9 @@ class AnimationEngine {
             repeat {
                 let moveAnim = POPSpringAnimation(propertyNamed: kPOPLayoutConstraintConstant)
                 moveAnim.toValue = self.originalConstants[index]
-                moveAnim.springBounciness = 12
+                moveAnim.springBounciness = 25
                 moveAnim.springSpeed = 12
+                moveAnim.dynamicsFriction = 25
                 
                 if index > 0 {
                     moveAnim.dynamicsFriction += 15 + CGFloat(index)

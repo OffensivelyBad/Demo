@@ -20,7 +20,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalSpacing" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="TJT-a7-ugk">
                                 <rect key="frame" x="245" y="200" width="600" height="375"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Kinder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrH-UH-Xeg">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kinder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrH-UH-Xeg">
                                         <rect key="frame" x="204" y="0.0" width="192" height="85"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="72"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

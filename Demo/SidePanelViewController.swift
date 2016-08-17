@@ -19,6 +19,8 @@ class SidePanelViewController: UIViewController {
     var delegate: SidePanelViewControllerDelegate?
     
     var people: Array<Person>?
+    var sectionHeight: CGFloat = 45
+    var titleFont: UIFont? = UIFont(name: "HelveticaNeue", size: 22)
     
     struct TableView {
         struct CellIdentifiers {
@@ -31,6 +33,7 @@ class SidePanelViewController: UIViewController {
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+
     }
     
     override func viewDidAppear(animated: Bool) {        
@@ -58,7 +61,6 @@ extension SidePanelViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(TableView.CellIdentifiers.PersonCell, forIndexPath: indexPath) as! PersonCell
         cell.configureForPerson(people![indexPath.row])
-        cell.materialDesign = true
         return cell
     }
     
@@ -79,8 +81,16 @@ extension SidePanelViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let title = UILabel()
-        title.backgroundColor = UIColor.lightGrayColor()
+        title.backgroundColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
         title.textColor = UIColor.whiteColor()
+        if let titleFont = self.titleFont {
+            title.font = titleFont
+        }
+        title.materialDesign = true
+        
+        let heightConstraint = NSLayoutConstraint(item: title, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: sectionHeight)
+        
+        NSLayoutConstraint.activateConstraints([heightConstraint])
         
         if self.restorationIdentifier == "RightViewController" {
             title.text = "Yerps "
@@ -94,7 +104,7 @@ extension SidePanelViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return 50.0
+        return sectionHeight
         
     }
     
