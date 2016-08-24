@@ -9,11 +9,12 @@
 import UIKit
 import CoreData
 
+var themeColor: UIColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -31,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        let addStatusBar = UIView()
 //        addStatusBar.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 20)
-//        addStatusBar.backgroundColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+//        addStatusBar.backgroundColor = themeColor
 //        self.window?.rootViewController?.view .addSubview(addStatusBar)
         
         

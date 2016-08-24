@@ -44,6 +44,9 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
         self.passwordField.animateFade(0, alpha: 1, duration: 1)
         self.loginButton.animateFade(0, alpha: 1, duration: 1)
         
+        self.loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.loginButton.backgroundColor = themeColor
+        
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

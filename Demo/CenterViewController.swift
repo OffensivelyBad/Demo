@@ -25,7 +25,6 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileAge: UILabel!
-    @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!   
     
     var initialLoad = true
@@ -38,7 +37,15 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     var animationEngine: AnimationEngine!
     var navBarHeight: CGFloat = 50.0
     var titleFont: UIFont? = UIFont(name: "HelveticaNeue", size: 22)
-
+    var naysTitle: String = "Nays"
+    var yaysTitle: String = "Yays"
+    var naysAction: Selector = #selector(CenterViewController.naysTapped(_:))
+    var yaysAction: Selector = #selector(CenterViewController.yaysTapped(_:))
+    enum ProfileVisibility {
+        case Visible
+        case Invisible
+    }
+    var profileState: ProfileVisibility = .Invisible
     
     // MARK: Button actions
     
@@ -59,13 +66,14 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         
         self.scrollView.hidden = true
         self.scrollView.alpha = 0
-        self.view.bringSubviewToFront(self.viewProfileButton)
+        self.viewProfileButton.backgroundColor = themeColor
         
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         addPictures()
+        self.view.bringSubviewToFront(self.viewProfileButton)
     }
     
     func setupNavigationBar() {
@@ -74,18 +82,52 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.materialDesign = true
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+        self.navigationController?.navigationBar.barTintColor = themeColor
         if let titleFont = self.titleFont {
             self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: titleFont, NSForegroundColorAttributeName: UIColor.whiteColor()]
         }
         
         self.navigationItem.setHidesBackButton(true, animated: false)
-        let naysButton = UIBarButtonItem(title: "Nays", style: .Plain, target: self, action: #selector(CenterViewController.naysTapped(_:)))
-        self.navigationItem.leftBarButtonItem = naysButton
         
-        let yaysButton = UIBarButtonItem(title: "Yays", style: .Plain, target: self, action: #selector(CenterViewController.yaysTapped(_:)))
-        self.navigationItem.rightBarButtonItem = yaysButton
+        let nayButton = createBarButton(self.naysTitle, action: naysAction)
+        let yayButton = createBarButton(self.yaysTitle, action: yaysAction)
+    
+        self.navigationItem.leftBarButtonItem = nayButton
+        self.navigationItem.rightBarButtonItem = yayButton
         
+//        let naysButton = UIBarButtonItem(title: "Nays", style: .Plain, target: self, action: #selector(CenterViewController.naysTapped(_:)))
+//        self.navigationItem.leftBarButtonItem = naysButton
+//        
+//        let yaysButton = UIBarButtonItem(title: "Yays", style: .Plain, target: self, action: #selector(CenterViewController.yaysTapped(_:)))
+//        self.navigationItem.rightBarButtonItem = yaysButton
+        
+    }
+    
+    func createBarButton(title: String, action: Selector) -> UIBarButtonItem {
+        let button: CustomButton = CustomButton()
+        button.frame = CGRectMake(0, 0, 48, 29)
+        button.setTitleColor(themeColor, forState: .Normal)
+        button.setTitle(title, forState: .Normal)
+        button.backgroundColor = UIColor.whiteColor()
+        button.addTarget(self, action: action, forControlEvents: .TouchUpInside)
+        button.layer.cornerRadius = 3
+        button.materialDesign = true
+        let finishedButton = UIBarButtonItem(customView: button)
+        return finishedButton
+    }
+    
+}
+
+//handle profilestate
+extension CenterViewController {
+    
+    func getButtonTitle() -> String {
+        switch self.profileState {
+        case .Invisible:
+            return "View Profile"
+        case .Visible:
+            return "Dismiss"
+        }
     }
     
 }
@@ -95,16 +137,23 @@ extension CenterViewController {
     
     @IBAction func viewProfileTapped(sender: AnyObject) {
         
-        openProfile()
-        
+        if self.profileState == .Visible {
+            dismissProfileView()
+            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: themeColor, color: UIColor.whiteColor(), title: getButtonTitle())
+        } else {
+            openProfile()
+            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: UIColor.whiteColor(), color: themeColor, title: getButtonTitle())
+        }
     }
     
     func openProfile() {
         //pop open the profile view
+        self.profileState = .Visible
         self.view.bringSubviewToFront(self.scrollView)
         self.view.bringSubviewToFront(self.stackView)
+        self.view.bringSubviewToFront(self.viewProfileButton)
         self.scrollView.layer.cornerRadius = 10
-        self.scrollView.backgroundColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+        self.scrollView.backgroundColor = themeColor
         self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
         self.profileImage.clipsToBounds = true
         
@@ -131,8 +180,10 @@ extension CenterViewController {
         }
     }
     
-    @IBAction func dismissProfileView() {
+    func dismissProfileView() {
         
+        self.profileState = .Invisible
+        self.view.bringSubviewToFront(self.viewProfileButton)
         toggleViews([self.scrollView, self.viewProfileButton, (self.navigationController?.navigationBar)!])
         
     }
@@ -157,18 +208,35 @@ extension CenterViewController {
         for view in views {
             if view.hidden {
                 view.hidden = false
-                fadeView(view, duration: 0.5, alpha: 1.0)
+                transformView(view, duration: 0.5, alpha: 1.0, backgroundColor: nil, color: nil, title: nil)
             } else {
-                fadeView(view, duration: 0.5, alpha: 0.0)
+                transformView(view, duration: 0.5, alpha: 0.0, backgroundColor: nil, color: nil, title: nil)
             }
         }
         
     }
     
-    func fadeView(view: UIView, duration: Double, alpha: CGFloat) {
+    func transformView(view: UIView, duration: Double, alpha: CGFloat?, backgroundColor: UIColor?, color: UIColor?, title: String?) {
         UIView.animateWithDuration(duration, animations: { () -> Void in
             
-            view.alpha = alpha
+            if let alpha = alpha {
+                view.alpha = alpha
+            }
+            if let backgroundColor = backgroundColor {
+                view.backgroundColor = backgroundColor
+            }
+            if let color = color {
+                if view is UIButton {
+                    let button = view as! UIButton
+                    button.setTitleColor(color, forState: .Normal)
+                }
+            }
+            if let title = title {
+                if view is UIButton {
+                    let button = view as! UIButton
+                    button.setTitle(title, forState: .Normal)
+                }
+            }
             
         }) { (complete) -> Void in
             if complete {

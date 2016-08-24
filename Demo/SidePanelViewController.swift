@@ -81,7 +81,7 @@ extension SidePanelViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let title = UILabel()
-        title.backgroundColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+        title.backgroundColor = themeColor
         title.textColor = UIColor.whiteColor()
         if let titleFont = self.titleFont {
             title.font = titleFont
