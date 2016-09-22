@@ -16,40 +16,40 @@ class KeyboardVC: UIViewController {
     let username = "Gary"
     let password = "test"
     
-    func setupKeyboardScrolling(sender: KeyboardVC) {
+    func setupKeyboardScrolling(_ sender: KeyboardVC) {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(KeyboardVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(KeyboardVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardVC.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardVC.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         self.viewOrigin = sender.view.frame.origin.y
         
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Notification) {
         
-        let userInfo: [NSObject: AnyObject] = sender.userInfo!
+        let userInfo: [AnyHashable: Any] = (sender as NSNotification).userInfo!
         
-        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
-        let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
+        let keyboardSize: CGSize = (userInfo[UIKeyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue.size
+        let offset: CGSize = (userInfo[UIKeyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue.size
         
         if keyboardSize.height == offset.height {
             if kbHidden {
                 kbHidden = false
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
+                UIView.animate(withDuration: 0.1, animations: { () -> Void in
                     self.view.frame.origin.y -= keyboardSize.height / 2
                 })
             }
         }
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Notification) {
         kbHidden = true
-        let userInfo: [NSObject : AnyObject] = sender.userInfo!
-        let _: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        let userInfo: [AnyHashable: Any] = (sender as NSNotification).userInfo!
+        let _: CGSize = (userInfo[UIKeyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue.size
         self.view.frame.origin.y = self.viewOrigin
     }
     
-    func simulateNetworkCall(username: String, password: String) -> (Bool, String) {
+    func simulateNetworkCall(_ username: String, password: String) -> (Bool, String) {
         
         var success = true
         var error = ""
@@ -74,24 +74,24 @@ class KeyboardVC: UIViewController {
         
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         kbHidden = true
         self.view.endEditing(true)
         
     }
     
-    func displayAlert(sender: String, title:String, message:String, buttonAction: String, alertColor: UIColor) {
+    func displayAlert(_ sender: String, title:String, message:String, buttonAction: String, alertColor: UIColor) {
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: buttonAction, style: .Default, handler: { (action) -> Void in
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: buttonAction, style: .default, handler: { (action) -> Void in
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             
         }))
         
         alert.view.tintColor = alertColor
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         
     }
     

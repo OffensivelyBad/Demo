@@ -10,7 +10,7 @@ import UIKit
 
 //@objc
 protocol SidePanelViewControllerDelegate {
-    func personSelected(person: Person)
+    func personSelected(_ person: Person)
 }
 
 class SidePanelViewController: UIViewController {
@@ -36,7 +36,7 @@ class SidePanelViewController: UIViewController {
 
     }
     
-    override func viewDidAppear(animated: Bool) {        
+    override func viewDidAppear(_ animated: Bool) {        
         self.tableView.reloadData()
     }
     
@@ -46,11 +46,11 @@ class SidePanelViewController: UIViewController {
 
 extension SidePanelViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
         if let people = self.people {
             count = people.count
@@ -58,9 +58,9 @@ extension SidePanelViewController: UITableViewDataSource {
         return count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(TableView.CellIdentifiers.PersonCell, forIndexPath: indexPath) as! PersonCell
-        cell.configureForPerson(people![indexPath.row])
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.PersonCell, for: indexPath) as! PersonCell
+        cell.configureForPerson(people![(indexPath as NSIndexPath).row])
         return cell
     }
     
@@ -70,31 +70,31 @@ extension SidePanelViewController: UITableViewDataSource {
 
 extension SidePanelViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedPerson = people![indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPerson = people![(indexPath as NSIndexPath).row]
         delegate?.personSelected(selectedPerson)
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let title = UILabel()
         title.backgroundColor = themeColor
-        title.textColor = UIColor.whiteColor()
+        title.textColor = UIColor.white
         if let titleFont = self.titleFont {
             title.font = titleFont
         }
         title.materialDesign = true
         
-        let heightConstraint = NSLayoutConstraint(item: title, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: sectionHeight)
+        let heightConstraint = NSLayoutConstraint(item: title, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: sectionHeight)
         
-        NSLayoutConstraint.activateConstraints([heightConstraint])
+        NSLayoutConstraint.activate([heightConstraint])
         
         if self.restorationIdentifier == "RightViewController" {
             title.text = "Yerps "
-            title.textAlignment = NSTextAlignment.Right
+            title.textAlignment = NSTextAlignment.right
         } else {
             title.text = " Nerps"
         }
@@ -102,7 +102,7 @@ extension SidePanelViewController: UITableViewDelegate {
         return title
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         return sectionHeight
         
@@ -118,7 +118,7 @@ class PersonCell: UITableViewCell {
     @IBOutlet weak var imageNameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     
-    func configureForPerson(person: Person) {
+    func configureForPerson(_ person: Person) {
         personImageView.image = person.image
         imageNameLabel.text = person.name
         ageLabel.text = "\(person.age)"

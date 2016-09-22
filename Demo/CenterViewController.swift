@@ -7,19 +7,39 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 @objc
 protocol CenterViewControllerDelegate {
-    optional func toggleLeftPanel()
-    optional func toggleRightPanel()
-    optional func collapseSidePanels()
+    @objc optional func toggleLeftPanel()
+    @objc optional func toggleRightPanel()
+    @objc optional func collapseSidePanels()
 }
 
 class CenterViewController: UIViewController, UIScrollViewDelegate {
     
-    weak private var imageView: UIImageView!
-    weak private var nameLabel: UILabel!
-    weak private var ageLabel: UILabel!
+    weak fileprivate var imageView: UIImageView!
+    weak fileprivate var nameLabel: UILabel!
+    weak fileprivate var ageLabel: UILabel!
     @IBOutlet weak var viewProfileButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var profileImage: UIImageView!
@@ -42,18 +62,18 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     var naysAction: Selector = #selector(CenterViewController.naysTapped(_:))
     var yaysAction: Selector = #selector(CenterViewController.yaysTapped(_:))
     enum ProfileVisibility {
-        case Visible
-        case Invisible
+        case visible
+        case invisible
     }
-    var profileState: ProfileVisibility = .Invisible
+    var profileState: ProfileVisibility = .invisible
     
-    // MARK: Button actions
+// MARK: Button actions
     
-    func naysTapped(sender: AnyObject) {
+    func naysTapped(_ sender: AnyObject) {
         delegate?.toggleLeftPanel?()
     }
     
-    func yaysTapped(sender: AnyObject) {
+    func yaysTapped(_ sender: AnyObject) {
         delegate?.toggleRightPanel?()
     }
     
@@ -64,27 +84,27 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         //populate the array from all people
         self.peoplePool = Person.allPeople()
         
-        self.scrollView.hidden = true
+        self.scrollView.isHidden = true
         self.scrollView.alpha = 0
         self.viewProfileButton.backgroundColor = themeColor
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         addPictures()
-        self.view.bringSubviewToFront(self.viewProfileButton)
+        self.view.bringSubview(toFront: self.viewProfileButton)
     }
     
     func setupNavigationBar() {
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.materialDesign = true
         
         self.navigationController?.navigationBar.barTintColor = themeColor
         if let titleFont = self.titleFont {
-            self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: titleFont, NSForegroundColorAttributeName: UIColor.whiteColor()]
+            self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: titleFont, NSForegroundColorAttributeName: UIColor.white]
         }
         
         self.navigationItem.setHidesBackButton(true, animated: false)
@@ -103,13 +123,13 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    func createBarButton(title: String, action: Selector) -> UIBarButtonItem {
+    func createBarButton(_ title: String, action: Selector) -> UIBarButtonItem {
         let button: CustomButton = CustomButton()
-        button.frame = CGRectMake(0, 0, 48, 29)
-        button.setTitleColor(themeColor, forState: .Normal)
-        button.setTitle(title, forState: .Normal)
-        button.backgroundColor = UIColor.whiteColor()
-        button.addTarget(self, action: action, forControlEvents: .TouchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 48, height: 29)
+        button.setTitleColor(themeColor, for: UIControlState())
+        button.setTitle(title, for: UIControlState())
+        button.backgroundColor = UIColor.white
+        button.addTarget(self, action: action, for: .touchUpInside)
         button.layer.cornerRadius = 3
         button.materialDesign = true
         let finishedButton = UIBarButtonItem(customView: button)
@@ -118,40 +138,40 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     
 }
 
-//handle profilestate
+//Mark: handle profilestate
 extension CenterViewController {
     
     func getButtonTitle() -> String {
         switch self.profileState {
-        case .Invisible:
+        case .invisible:
             return "View Profile"
-        case .Visible:
+        case .visible:
             return "Dismiss"
         }
     }
     
 }
 
-//handle profile view
+//MARK: handle profile view
 extension CenterViewController {
     
-    @IBAction func viewProfileTapped(sender: AnyObject) {
+    @IBAction func viewProfileTapped(_ sender: AnyObject) {
         
-        if self.profileState == .Visible {
+        if self.profileState == .visible {
             dismissProfileView()
-            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: themeColor, color: UIColor.whiteColor(), title: getButtonTitle())
+            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: themeColor, color: UIColor.white, title: getButtonTitle())
         } else {
             openProfile()
-            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: UIColor.whiteColor(), color: themeColor, title: getButtonTitle())
+            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: UIColor.white, color: themeColor, title: getButtonTitle())
         }
     }
     
     func openProfile() {
         //pop open the profile view
-        self.profileState = .Visible
-        self.view.bringSubviewToFront(self.scrollView)
-        self.view.bringSubviewToFront(self.stackView)
-        self.view.bringSubviewToFront(self.viewProfileButton)
+        self.profileState = .visible
+        self.view.bringSubview(toFront: self.scrollView)
+        self.view.bringSubview(toFront: self.stackView)
+        self.view.bringSubview(toFront: self.viewProfileButton)
         self.scrollView.layer.cornerRadius = 10
         self.scrollView.backgroundColor = themeColor
         self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
@@ -182,32 +202,32 @@ extension CenterViewController {
     
     func dismissProfileView() {
         
-        self.profileState = .Invisible
-        self.view.bringSubviewToFront(self.viewProfileButton)
+        self.profileState = .invisible
+        self.view.bringSubview(toFront: self.viewProfileButton)
         toggleViews([self.scrollView, self.viewProfileButton, (self.navigationController?.navigationBar)!])
         
     }
     
 }
 
-//handle view visibility
+//MARK: handle view visibility
 extension CenterViewController {
     
-    func toggleViews(views: [UIView]) {
+    func toggleViews(_ views: [UIView]) {
         
         if let navBar = self.navigationController?.navigationBar {
         
-            if navBar.translucent {
-                self.navigationController?.navigationBar.translucent = false
+            if navBar.isTranslucent {
+                self.navigationController?.navigationBar.isTranslucent = false
             } else {
-                self.navigationController?.navigationBar.translucent = true
+                self.navigationController?.navigationBar.isTranslucent = true
             }
             
         }
         
         for view in views {
-            if view.hidden {
-                view.hidden = false
+            if view.isHidden {
+                view.isHidden = false
                 transformView(view, duration: 0.5, alpha: 1.0, backgroundColor: nil, color: nil, title: nil)
             } else {
                 transformView(view, duration: 0.5, alpha: 0.0, backgroundColor: nil, color: nil, title: nil)
@@ -216,8 +236,8 @@ extension CenterViewController {
         
     }
     
-    func transformView(view: UIView, duration: Double, alpha: CGFloat?, backgroundColor: UIColor?, color: UIColor?, title: String?) {
-        UIView.animateWithDuration(duration, animations: { () -> Void in
+    func transformView(_ view: UIView, duration: Double, alpha: CGFloat?, backgroundColor: UIColor?, color: UIColor?, title: String?) {
+        UIView.animate(withDuration: duration, animations: { () -> Void in
             
             if let alpha = alpha {
                 view.alpha = alpha
@@ -228,28 +248,28 @@ extension CenterViewController {
             if let color = color {
                 if view is UIButton {
                     let button = view as! UIButton
-                    button.setTitleColor(color, forState: .Normal)
+                    button.setTitleColor(color, for: UIControlState())
                 }
             }
             if let title = title {
                 if view is UIButton {
                     let button = view as! UIButton
-                    button.setTitle(title, forState: .Normal)
+                    button.setTitle(title, for: UIControlState())
                 }
             }
             
-        }) { (complete) -> Void in
+        }, completion: { (complete) -> Void in
             if complete {
                 if alpha == 0.0 {
-                    view.hidden = true
+                    view.isHidden = true
                 }
             }
-        }
+        }) 
     }
     
 }
 
-//handle images
+//MARK: handle images
 extension CenterViewController {
     
     func addPictures() {
@@ -287,9 +307,9 @@ extension CenterViewController {
         personWasSelected = false
     }
     
-    func wasDragged(gesture: UIPanGestureRecognizer) {
+    func wasDragged(_ gesture: UIPanGestureRecognizer) {
         
-        let translation = gesture.translationInView(self.view)
+        let translation = gesture.translation(in: self.view)
         let image = gesture.view! as! UIImageView
         self.xFromCenter += translation.x
         
@@ -299,19 +319,19 @@ extension CenterViewController {
         
         var scale: CGFloat = min(100 / abs(xFromCenter), 1)
         image.center = CGPoint(x: image.center.x + translation.x, y: image.center.y)
-        gesture.setTranslation(CGPointZero, inView: self.view)
-        let rotation:CGAffineTransform = CGAffineTransformMakeRotation(xFromCenter / 200)
-        let stretch:CGAffineTransform = CGAffineTransformScale(rotation, scale, scale)
+        gesture.setTranslation(CGPoint.zero, in: self.view)
+        let rotation:CGAffineTransform = CGAffineTransform(rotationAngle: xFromCenter / 200)
+        let stretch:CGAffineTransform = rotation.scaledBy(x: scale, y: scale)
         image.transform = stretch
         
-        if gesture.state == UIGestureRecognizerState.Ended {
+        if gesture.state == UIGestureRecognizerState.ended {
             
             func recycle() {
                 //remove the person from the pool
                 if self.peoplePool?.count > 0 {
                     for i in 0..<self.peoplePool!.count {
                         if peoplePool![i] === self.selectedPerson {
-                            peoplePool!.removeAtIndex(i)
+                            peoplePool!.remove(at: i)
                             break
                         }
                     }
@@ -331,11 +351,11 @@ extension CenterViewController {
                 }
                 recycle()
             } else {
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
+                UIView.animate(withDuration: 0.1, animations: { () -> Void in
                     let centeredImage = self.centerImage(image)
                     scale = 1
-                    let rotation:CGAffineTransform = CGAffineTransformMakeRotation(0)
-                    let stretch:CGAffineTransform = CGAffineTransformScale(rotation, scale, scale)
+                    let rotation:CGAffineTransform = CGAffineTransform(rotationAngle: 0)
+                    let stretch:CGAffineTransform = rotation.scaledBy(x: scale, y: scale)
                     centeredImage.transform = stretch
                 })
             }
@@ -345,53 +365,66 @@ extension CenterViewController {
     }
     
     func createImage() -> UIImageView {
-        let image: UIImageView = UIImageView(frame: CGRectMake(0,0, self.view.frame.width - 100, self.view.frame.height - 100))
+        let image: UIImageView = UIImageView(frame: CGRect(x: 0,y: 0, width: self.view.frame.width - 100, height: self.view.frame.height - 100))
         image.translatesAutoresizingMaskIntoConstraints = false
         image.materialDesign = true
         
         return image
     }
     
-    func setImageConstraints(image: UIImageView) {
-        image.contentMode = UIViewContentMode.ScaleAspectFit
-        let widthConstraint = NSLayoutConstraint(item: image, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.view.frame.width - 100)
-        let heightConstraint = NSLayoutConstraint(item: image, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.view.frame.height - 100)
-        let xConstraint = NSLayoutConstraint(item: image, attribute: .CenterX, relatedBy: .Equal, toItem: self.view, attribute: .CenterX, multiplier: 1, constant: 0)
-        let yConstraint = NSLayoutConstraint(item: image, attribute: .CenterY, relatedBy: .Equal, toItem: self.view, attribute: .CenterY, multiplier: 1, constant: 0)
-        NSLayoutConstraint.activateConstraints([xConstraint, yConstraint, widthConstraint, heightConstraint])
+    func setImageConstraints(_ image: UIImageView) {
+        image.contentMode = UIViewContentMode.scaleAspectFit
+        let widthConstraint = NSLayoutConstraint(item: image, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.frame.width - 100)
+        let heightConstraint = NSLayoutConstraint(item: image, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.frame.height - 100)
+        let xConstraint = NSLayoutConstraint(item: image, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
+        let yConstraint = NSLayoutConstraint(item: image, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0)
+        NSLayoutConstraint.activate([xConstraint, yConstraint, widthConstraint, heightConstraint])
         self.animationEngine = AnimationEngine(constraints: [yConstraint], effect: "slideFromTop")
         self.animationEngine.animateOnScreen(0)
     }
     
-    func centerImage(image: UIImageView) -> UIImageView {
-        image.contentMode = UIViewContentMode.ScaleAspectFit
+    func centerImage(_ image: UIImageView) -> UIImageView {
+        image.contentMode = UIViewContentMode.scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = true
-        let midX = CGRectGetMidX(self.view.frame)
-        let midY = CGRectGetMidY(self.view.frame)
-        image.center = CGPointMake(midX, midY)
+        let midX = self.view.frame.midX
+        let midY = self.view.frame.midY
+        image.center = CGPoint(x: midX, y: midY)
         
         return image
     }
     
-    func addGesture(image: UIImageView) {
+    func addGesture(_ image: UIImageView) {
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(CenterViewController.wasDragged(_:)))
         image.addGestureRecognizer(gesture)
-        image.userInteractionEnabled = true
+        image.isUserInteractionEnabled = true
     }
     
 }
 
+//MARK: handle touches
+extension CenterViewController {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        delegate?.collapseSidePanels?()
+        super.touchesBegan(touches, with: event)
+        
+    }
+    
+}
+
+//MARK: delegate functions
 extension CenterViewController: SidePanelViewControllerDelegate {
-    func personSelected(person: Person) {
-        self.peoplePool?.insert(person, atIndex: 0)
+    func personSelected(_ person: Person) {
+        self.peoplePool?.insert(person, at: 0)
         self.personWasSelected = true
         
         //remove the person from nays
         if nays?.count > 0 {
-            if nays!.contains({ $0 === person }) {
+            if nays!.contains(where: { $0 === person }) {
                 for i in 0..<nays!.count {
                     if nays![i] === person {
-                        nays!.removeAtIndex(i)
+                        nays!.remove(at: i)
                         break
                     }
                 }
@@ -399,10 +432,10 @@ extension CenterViewController: SidePanelViewControllerDelegate {
         }
         //remove the person from nays
         if yays?.count > 0 {
-            if yays!.contains({ $0 === person }) {
+            if yays!.contains(where: { $0 === person }) {
                 for i in 0..<yays!.count {
                     if yays![i] === person {
-                        yays!.removeAtIndex(i)
+                        yays!.remove(at: i)
                         break
                     }
                 }

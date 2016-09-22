@@ -22,7 +22,7 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
         super.viewDidLoad()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         initialLoad()
     }
     
@@ -44,12 +44,12 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
         self.passwordField.animateFade(0, alpha: 1, duration: 1)
         self.loginButton.animateFade(0, alpha: 1, duration: 1)
         
-        self.loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.loginButton.setTitleColor(UIColor.white, for: UIControlState())
         self.loginButton.backgroundColor = themeColor
         
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == self.usernameField {
             self.passwordField.becomeFirstResponder()
@@ -62,12 +62,12 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
         
     }
     
-    @IBAction func loginTouched(sender: AnyObject) {
+    @IBAction func loginTouched(_ sender: AnyObject) {
         
         //bypass credentials
 //        performSegueWithIdentifier("loginHomeSegue", sender: self)
 
-        presentViewController(containerViewController, animated: true, completion: nil)
+        present(containerViewController, animated: true, completion: nil)
         
         
 //        if let username = self.usernameField.text, password = self.passwordField.text {

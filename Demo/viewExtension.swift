@@ -10,19 +10,19 @@ import UIKit
 
 extension UIView {
     
-    func animateFade(delay: Int64, alpha: CGFloat, duration: NSTimeInterval) {
+    func animateFade(_ delay: Int64, alpha: CGFloat, duration: TimeInterval) {
         
         let d: Int64 = delay * Int64(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, d)
+        let time = DispatchTime.now() + Double(d) / Double(NSEC_PER_SEC)
         
-            dispatch_after(time, dispatch_get_main_queue()) {
+            DispatchQueue.main.asyncAfter(deadline: time) {
             
             
-            UIView.animateWithDuration(duration) { 
+            UIView.animate(withDuration: duration, animations: { 
                 
                 self.alpha = alpha
                 
-            }
+            }) 
         }
     }
 }

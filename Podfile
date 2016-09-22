@@ -5,4 +5,5 @@ use_frameworks!
 
 target 'Demo' do
 pod 'pop', '~> 1.0'
+pod 'Firebase'
 end
