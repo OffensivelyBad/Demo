@@ -63,24 +63,25 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
     }
     
     @IBAction func loginTouched(_ sender: AnyObject) {
-        
-        //bypass credentials
-//        performSegueWithIdentifier("loginHomeSegue", sender: self)
 
-        present(containerViewController, animated: true, completion: nil)
+//        present(containerViewController, animated: true, completion: nil)
         
+        let networkHelper = NetworkHelper()
         
-//        if let username = self.usernameField.text, password = self.passwordField.text {
-//        
-//            let (success, error) = simulateNetworkCall(username, password: password)
-//            
-//            if success {
-//                performSegueWithIdentifier("loginHomeSegue", sender: self)
-//            } else {
-//                displayAlert("login", title: "Login Failed", message: "\(error)", buttonAction: "OK", alertColor: UIColor.blueColor())
-//            }
-//        
-//        }
+        if let usernameText = self.usernameField.text, let passwordText = self.passwordField.text {
+        
+            networkHelper.login(email: usernameText, password: passwordText) { (success) in
+                
+                if success {
+                    self.present(self.containerViewController, animated: true, completion: nil)
+                } else {
+                    //handle error
+                }
+            
+            
+            }
+        }
+        
     }
     
 }
