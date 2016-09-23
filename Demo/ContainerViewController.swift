@@ -176,16 +176,16 @@ extension ContainerViewController: CenterViewControllerDelegate {
     
 }
 
-/*
 
+/*
     // MARK: Gesture recognizer
 extension ContainerViewController: UIGestureRecognizerDelegate {
     
     func handlePanGesture(recognizer: UIPanGestureRecognizer) {
-        let gestureIsDraggingFromLeftToRight = (recognizer.velocityInView(view).x > 0)
+        let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
         
         switch(recognizer.state) {
-        case .Began:
+        case .began:
             if (currentState == .BothCollapsed) {
                 if (gestureIsDraggingFromLeftToRight) {
                     addLeftPanelViewController()
@@ -212,7 +212,7 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
         }
     }
 }
- */
+*/
 
 private extension UIStoryboard {
     class func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: Bundle.main) }

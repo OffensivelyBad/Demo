@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0848971A1911AA072889C86A /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0E02BDEF4DBAE8356B9878 /* Pods_Demo.framework */; };
+		7109B0D91D95C02500DB535F /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7109B0D81D95C02500DB535F /* AlertHelper.swift */; };
+		7109B0DB1D95C7C300DB535F /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7109B0DA1D95C7C300DB535F /* ActivityIndicator.swift */; };
 		71B35A0C1D941CB900F5FA4B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71B35A0B1D941CB900F5FA4B /* GoogleService-Info.plist */; };
 		71B90CA91D94A6C70076D779 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B90CA81D94A6C70076D779 /* NetworkHelper.swift */; };
 		71F35B261D41BE8B0084AB91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F35B251D41BE8B0084AB91 /* AppDelegate.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7109B0D81D95C02500DB535F /* AlertHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
+		7109B0DA1D95C7C300DB535F /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		71B35A0B1D941CB900F5FA4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		71B90CA81D94A6C70076D779 /* NetworkHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		71F35B221D41BE8B0084AB91 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,11 +114,13 @@
 		71F35B3A1D41C7250084AB91 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7109B0D81D95C02500DB535F /* AlertHelper.swift */,
 				71F35B571D453D8D0084AB91 /* KeyboardVC.swift */,
 				71F35B3F1D41C7890084AB91 /* MaterialView.swift */,
 				71F35B4B1D41CB760084AB91 /* CustomButton.swift */,
 				71F35B4D1D41CB820084AB91 /* CustomTextField.swift */,
 				71F35B4F1D41CF210084AB91 /* viewExtension.swift */,
+				7109B0DA1D95C7C300DB535F /* ActivityIndicator.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -197,7 +203,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = OffensivelyBad;
 				TargetAttributes = {
 					71F35B211D41BE8B0084AB91 = {
@@ -303,9 +309,11 @@
 				71F35B261D41BE8B0084AB91 /* AppDelegate.swift in Sources */,
 				71F35B431D41C8310084AB91 /* AnimationEngine.swift in Sources */,
 				71F35B5C1D454D980084AB91 /* ContainerViewController.swift in Sources */,
+				7109B0D91D95C02500DB535F /* AlertHelper.swift in Sources */,
 				71F35B501D41CF210084AB91 /* viewExtension.swift in Sources */,
 				71F35B5A1D4541360084AB91 /* Reachability.swift in Sources */,
 				71F35B401D41C7890084AB91 /* MaterialView.swift in Sources */,
+				7109B0DB1D95C7C300DB535F /* ActivityIndicator.swift in Sources */,
 				71F35B5E1D4573FD0084AB91 /* SidePanelViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,8 +354,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -392,8 +402,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -412,6 +424,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

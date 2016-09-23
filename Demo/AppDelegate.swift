@@ -9,8 +9,10 @@
 import UIKit
 import CoreData
 import Firebase
+import FirebaseAuth
 
-var themeColor: UIColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+let themeColor: UIColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+let testMode = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -128,6 +130,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func checkUserLoggedIn(loggedIn: @escaping (Bool) -> Void) {
+        
+            FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+                
+                var signedIn: Bool
+                
+                if let _ = user {
+                    signedIn = true
+                    loggedIn(signedIn)
+                } else {
+                    signedIn = false
+                    loggedIn(signedIn)
+                }
+        
+        })
+    }
 
 }
 
+let ad = UIApplication.shared.delegate as! AppDelegate

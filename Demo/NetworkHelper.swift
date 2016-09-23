@@ -11,7 +11,7 @@ import FirebaseAuth
 import Firebase
 
 class NetworkHelper {
-
+    
     func login(email: String, password: String, loggedIn: @escaping (Bool) -> Void) {
         if self.checkConnection() {
             FIRAuth.auth()?.signIn(withEmail: email, password: password) { (user, error) in
@@ -24,9 +24,31 @@ class NetworkHelper {
         }
     }
     
+    func logout() {
+        
+        try! FIRAuth.auth()?.signOut()
+        
+    }
+    
     func checkConnection() -> Bool {
         
         return Reachability.isConnectedToNetwork()
+        
+    }
+    
+    func checkUserSignInStatus() -> Bool {
+        
+        var signedIn = false
+        
+        FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            
+            if let _ = user {
+                signedIn = true
+            }
+            
+        })
+        
+        return signedIn
         
     }
 

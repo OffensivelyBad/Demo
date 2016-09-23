@@ -16,16 +16,33 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     
     let containerViewController = ContainerViewController()
-    
+    let alertHelper = AlertHelper()
+    let networkHelper = NetworkHelper()
+    let activityIndicator = ActivityIndicator()
+    let loginAlertTitle = "You done goofed"
+    let loginAlertMessage = "The consequences will never be the same"
+    var firstCall = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //check if user is logged in already
+        ad.checkUserLoggedIn { (loggedIn) in
+            if loggedIn && self.firstCall {
+                self.firstCall = false
+                self.performLoggedInSegue(animated: false)
+            }
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         initialLoad()
+        
     }
     
+// MARK: UI Setup
     func initialLoad() {
         
         nays = Array<Person>()
@@ -62,26 +79,36 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
         
     }
     
+// MARK: Handle login
     @IBAction func loginTouched(_ sender: AnyObject) {
-
-//        present(containerViewController, animated: true, completion: nil)
         
-        let networkHelper = NetworkHelper()
-        
-        if let usernameText = self.usernameField.text, let passwordText = self.passwordField.text {
-        
-            networkHelper.login(email: usernameText, password: passwordText) { (success) in
-                
-                if success {
-                    self.present(self.containerViewController, animated: true, completion: nil)
-                } else {
-                    //handle error
+        if !testMode {
+            
+            self.activityIndicator.activityStarted(sender: self)
+            
+            if let usernameText = self.usernameField.text, let passwordText = self.passwordField.text {
+            
+                self.networkHelper.login(email: usernameText, password: passwordText) { (success) in
+                    
+                    self.activityIndicator.activityStopped()
+                    
+                    if success {
+                        self.performLoggedInSegue(animated: true)
+                    } else {
+                        //show an error
+                        self.alertHelper.displayAlert(sender: self, title: self.loginAlertTitle, message: self.loginAlertMessage)
+                    }
                 }
-            
-            
             }
+            
+        } else {
+            self.performLoggedInSegue(animated: true)
         }
         
+    }
+    
+    func performLoggedInSegue(animated: Bool) {
+        self.present(self.containerViewController, animated: animated, completion: nil)
     }
     
 }

@@ -16,8 +16,9 @@ protocol SidePanelViewControllerDelegate {
 class SidePanelViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    var delegate: SidePanelViewControllerDelegate?
+    let networkHelper = NetworkHelper()
     
+    var delegate: SidePanelViewControllerDelegate?
     var people: Array<Person>?
     var sectionHeight: CGFloat = 45
     var titleFont: UIFont? = UIFont(name: "HelveticaNeue", size: 22)
@@ -25,6 +26,7 @@ class SidePanelViewController: UIViewController {
     struct TableView {
         struct CellIdentifiers {
             static let PersonCell = "PersonCell"
+            static let LogoutCell = "LogoutCell"
         }
     }
     
@@ -45,23 +47,47 @@ class SidePanelViewController: UIViewController {
 // MARK: Table View Data Source
 
 extension SidePanelViewController: UITableViewDataSource {
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 0
+        var count = 1
         if let people = self.people {
-            count = people.count
+            count = people.count + 1
         }
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.PersonCell, for: indexPath) as! PersonCell
-        cell.configureForPerson(people![(indexPath as NSIndexPath).row])
-        return cell
+        
+        func createLogoutCell() -> LogoutCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.LogoutCell, for: indexPath) as! LogoutCell
+            cell.logoutButton.addTarget(self, action: #selector(SidePanelViewController.logout), for: .touchUpInside)
+            return cell
+        }
+        
+        let defaultCell = createLogoutCell()
+        
+        if let people = self.people {
+        
+            if indexPath.row == people.count {
+                
+                let cell = createLogoutCell()
+                return cell
+                
+            } else {
+            
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.PersonCell, for: indexPath) as! PersonCell
+                cell.configureForPerson(people[(indexPath as NSIndexPath).row])
+                return cell
+            }
+            
+        }
+    
+        return defaultCell
+        
     }
     
 }
@@ -108,6 +134,13 @@ extension SidePanelViewController: UITableViewDelegate {
         
     }
     
+    public func logout() {
+        
+        self.networkHelper.logout()
+        //navigate back to login VC
+        
+    }
+    
 }
 
 // Mark: Configure Table View Cell
@@ -128,5 +161,11 @@ class PersonCell: UITableViewCell {
         personImageView.clipsToBounds = true
         
     }
+    
+}
+
+class LogoutCell: UITableViewCell {
+    
+    @IBOutlet weak var logoutButton: UIButton!
     
 }
