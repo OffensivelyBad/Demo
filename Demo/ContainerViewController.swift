@@ -24,6 +24,7 @@ class ContainerViewController: UIViewController {
     var centerNavigationController: UINavigationController!
     var centerViewController: CenterViewController!
     var loginViewController: LoginViewController!
+    let networkHelper = NetworkHelper()
     
     var currentState: SlideOutState = .bothCollapsed {
         didSet {
@@ -57,11 +58,24 @@ class ContainerViewController: UIViewController {
         
     }
     
+    func test() {
+        self.present(loginViewController, animated: true) { 
+            //nothing to do
+        }
+    }
+    
 }
 
 // MARK: CenterViewController delegate
 
 extension ContainerViewController: CenterViewControllerDelegate {
+    
+    public func logout() {
+        
+        self.networkHelper.logout()
+        //navigate back to login VC
+        self.test()
+    }
     
     func toggleLeftPanel() {
         

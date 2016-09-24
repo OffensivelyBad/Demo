@@ -28,8 +28,7 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
         
         //check if user is logged in already
         ad.checkUserLoggedIn { (loggedIn) in
-            if loggedIn && self.firstCall {
-                self.firstCall = false
+            if loggedIn {
                 self.performLoggedInSegue(animated: false)
             }
         }
@@ -108,7 +107,10 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
     }
     
     func performLoggedInSegue(animated: Bool) {
-        self.present(self.containerViewController, animated: animated, completion: nil)
+        if self.firstCall {
+            self.firstCall = false
+            self.present(self.containerViewController, animated: animated, completion: nil)
+        }
     }
     
 }

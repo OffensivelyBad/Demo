@@ -33,6 +33,7 @@ protocol CenterViewControllerDelegate {
     @objc optional func toggleLeftPanel()
     @objc optional func toggleRightPanel()
     @objc optional func collapseSidePanels()
+    @objc optional func logout()
 }
 
 class CenterViewController: UIViewController, UIScrollViewDelegate {
@@ -446,4 +447,9 @@ extension CenterViewController: SidePanelViewControllerDelegate {
         
         addPictures()
     }
+    
+    func logout() {
+        delegate?.logout?()
+    }
+    
 }

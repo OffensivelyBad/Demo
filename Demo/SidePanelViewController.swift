@@ -11,6 +11,7 @@ import UIKit
 //@objc
 protocol SidePanelViewControllerDelegate {
     func personSelected(_ person: Person)
+    func logout()
 }
 
 class SidePanelViewController: UIViewController {
@@ -40,6 +41,10 @@ class SidePanelViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {        
         self.tableView.reloadData()
+    }
+    
+    func logout() {
+        delegate?.logout()
     }
     
 }
@@ -131,13 +136,6 @@ extension SidePanelViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         return sectionHeight
-        
-    }
-    
-    public func logout() {
-        
-        self.networkHelper.logout()
-        //navigate back to login VC
         
     }
     
