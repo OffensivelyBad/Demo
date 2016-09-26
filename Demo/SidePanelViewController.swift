@@ -16,6 +16,7 @@ protocol SidePanelViewControllerDelegate {
 
 class SidePanelViewController: UIViewController {
     
+    @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     let networkHelper = NetworkHelper()
     
@@ -27,24 +28,30 @@ class SidePanelViewController: UIViewController {
     struct TableView {
         struct CellIdentifiers {
             static let PersonCell = "PersonCell"
-            static let LogoutCell = "LogoutCell"
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initialSetup()
+    }
+    
+    func initialSetup() {
+        //setup tableview
         self.tableView.dataSource = self
         self.tableView.delegate = self
-
+        //setup logout button
+        self.logoutButton.backgroundColor = _THEME_COLOR
     }
     
     override func viewDidAppear(_ animated: Bool) {        
         self.tableView.reloadData()
     }
     
-    func logout() {
+    @IBAction func logoutTapped(_ sender: AnyObject) {
+        
         delegate?.logout()
+        
     }
     
 }
@@ -58,37 +65,25 @@ extension SidePanelViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 1
+        var count = 0
         if let people = self.people {
-            count = people.count + 1
+            count = people.count
         }
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        func createLogoutCell() -> LogoutCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.LogoutCell, for: indexPath) as! LogoutCell
-            cell.logoutButton.addTarget(self, action: #selector(SidePanelViewController.logout), for: .touchUpInside)
-            return cell
-        }
-        
-        let defaultCell = createLogoutCell()
+        let defaultCell = UITableViewCell()
         
         if let people = self.people {
-        
-            if indexPath.row == people.count {
-                
-                let cell = createLogoutCell()
-                return cell
-                
-            } else {
             
+            if people.count > 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.PersonCell, for: indexPath) as! PersonCell
                 cell.configureForPerson(people[(indexPath as NSIndexPath).row])
                 return cell
+        
             }
-            
         }
     
         return defaultCell
@@ -112,7 +107,7 @@ extension SidePanelViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let title = UILabel()
-        title.backgroundColor = themeColor
+        title.backgroundColor = _THEME_COLOR
         title.textColor = UIColor.white
         if let titleFont = self.titleFont {
             title.font = titleFont
@@ -159,11 +154,5 @@ class PersonCell: UITableViewCell {
         personImageView.clipsToBounds = true
         
     }
-    
-}
-
-class LogoutCell: UITableViewCell {
-    
-    @IBOutlet weak var logoutButton: UIButton!
     
 }

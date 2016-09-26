@@ -61,7 +61,7 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
         self.loginButton.animateFade(0, alpha: 1, duration: 1)
         
         self.loginButton.setTitleColor(UIColor.white, for: UIControlState())
-        self.loginButton.backgroundColor = themeColor
+        self.loginButton.backgroundColor = _THEME_COLOR
         
     }
     

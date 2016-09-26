@@ -215,38 +215,35 @@
                                             <outlet property="personImageView" destination="Kyr-lx-bUF" id="Ocw-ef-1MZ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogoutCell" rowHeight="100" id="TEz-0K-EhB" customClass="LogoutCell" customModule="Demo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="128" width="375" height="100"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TEz-0K-EhB" id="gyp-ai-toP">
-                                            <frame key="frameInset" width="375" height="100"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGW-Ja-RDF">
-                                                    <state key="normal" title="Logout"/>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="MGW-Ja-RDF" firstAttribute="centerY" secondItem="gyp-ai-toP" secondAttribute="centerY" id="PHy-kl-DLR"/>
-                                                <constraint firstItem="MGW-Ja-RDF" firstAttribute="leading" secondItem="gyp-ai-toP" secondAttribute="leadingMargin" constant="8" id="u1b-lU-18o"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="logoutButton" destination="MGW-Ja-RDF" id="yG7-Lp-SuR"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QSS-nJ-MXW" customClass="CustomButton" customModule="Demo" customModuleProvider="target">
+                                <color key="backgroundColor" red="0.30980392159999998" green="0.6588235294" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="164" id="j8w-37-tvd"/>
+                                    <constraint firstAttribute="height" constant="37" id="mTN-UC-qba"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="19"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="logoutTapped:" destination="Otm-jd-8Gq" eventType="touchUpInside" id="VXA-40-gz1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="5fa-8Y-U4A" firstAttribute="top" secondItem="d69-Cv-lxU" secondAttribute="bottom" id="0CF-op-fGg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="d69-Cv-lxU" secondAttribute="trailing" id="34S-jG-hRj"/>
                             <constraint firstItem="d69-Cv-lxU" firstAttribute="top" secondItem="fNt-Je-XkM" secondAttribute="bottom" id="58s-qB-RkQ"/>
                             <constraint firstItem="d69-Cv-lxU" firstAttribute="leading" secondItem="hNU-aJ-pMG" secondAttribute="leading" id="AcQ-m4-lAt"/>
+                            <constraint firstItem="5fa-8Y-U4A" firstAttribute="top" secondItem="QSS-nJ-MXW" secondAttribute="bottom" constant="8" id="CoG-Hm-HbN"/>
+                            <constraint firstItem="QSS-nJ-MXW" firstAttribute="leading" secondItem="hNU-aJ-pMG" secondAttribute="leadingMargin" id="PF3-JU-c52"/>
                             <constraint firstItem="d69-Cv-lxU" firstAttribute="leading" secondItem="hNU-aJ-pMG" secondAttribute="leadingMargin" id="QH5-9I-ngo"/>
-                            <constraint firstItem="5fa-8Y-U4A" firstAttribute="top" secondItem="d69-Cv-lxU" secondAttribute="bottom" id="Vu9-t8-PPt"/>
-                            <constraint firstItem="d69-Cv-lxU" firstAttribute="top" secondItem="fNt-Je-XkM" secondAttribute="bottom" id="eAZ-tU-3Ta"/>
+                            <constraint firstItem="5fa-8Y-U4A" firstAttribute="top" secondItem="d69-Cv-lxU" secondAttribute="bottom" constant="45" id="Vu9-t8-PPt"/>
                             <constraint firstItem="d69-Cv-lxU" firstAttribute="leading" secondItem="hNU-aJ-pMG" secondAttribute="leading" id="pZg-L5-36M"/>
                             <constraint firstAttribute="trailing" secondItem="d69-Cv-lxU" secondAttribute="trailing" id="qgG-Gz-SCP"/>
                             <constraint firstAttribute="trailing" secondItem="d69-Cv-lxU" secondAttribute="trailing" id="sgN-ai-WR5"/>
@@ -261,6 +258,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="logoutButton" destination="QSS-nJ-MXW" id="62x-De-AXo"/>
                         <outlet property="tableView" destination="d69-Cv-lxU" id="T0Z-gU-kr2"/>
                     </connections>
                 </viewController>
@@ -505,38 +503,41 @@
                                             <outlet property="personImageView" destination="w2W-XU-z6W" id="HYo-AW-I7Y"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogoutCell" rowHeight="100" id="ENb-G0-aRh" customClass="LogoutCell" customModule="Demo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="128" width="375" height="100"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ENb-G0-aRh" id="sag-PH-fvZ">
-                                            <frame key="frameInset" width="375" height="100"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Yr-aj-GYV">
-                                                    <state key="normal" title="Logout"/>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="6Yr-aj-GYV" secondAttribute="trailing" constant="8" id="cCM-oz-6nL"/>
-                                                <constraint firstItem="6Yr-aj-GYV" firstAttribute="centerY" secondItem="sag-PH-fvZ" secondAttribute="centerY" id="lsz-zd-xcZ"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="logoutButton" destination="6Yr-aj-GYV" id="TgG-Pz-utz"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64h-JE-ds5" customClass="CustomButton" customModule="Demo" customModuleProvider="target">
+                                <color key="backgroundColor" red="0.30980392159999998" green="0.6588235294" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="9Ga-jp-M9d"/>
+                                    <constraint firstAttribute="width" constant="164" id="bxO-HB-n2n"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="19"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="logoutTapped:" destination="Raf-2j-9l0" eventType="touchUpInside" id="Wgw-ER-3Xv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="gWN-zB-sDC" firstAttribute="top" secondItem="Unv-rg-haE" secondAttribute="bottom" id="AYY-Yw-K2h"/>
+                            <constraint firstItem="gWN-zB-sDC" firstAttribute="top" secondItem="Unv-rg-haE" secondAttribute="bottom" constant="45" id="AYY-Yw-K2h"/>
                             <constraint firstItem="Unv-rg-haE" firstAttribute="top" secondItem="uhg-4S-1Xt" secondAttribute="bottom" id="CeF-1u-YiP"/>
                             <constraint firstItem="Unv-rg-haE" firstAttribute="leading" secondItem="dLV-tm-zYl" secondAttribute="leading" id="Ies-cg-yko"/>
                             <constraint firstAttribute="trailing" secondItem="Unv-rg-haE" secondAttribute="trailing" id="aYS-sH-WRA"/>
+                            <constraint firstItem="gWN-zB-sDC" firstAttribute="top" secondItem="64h-JE-ds5" secondAttribute="bottom" constant="8" id="r6L-T9-94m"/>
+                            <constraint firstItem="64h-JE-ds5" firstAttribute="trailing" secondItem="dLV-tm-zYl" secondAttribute="trailingMargin" id="y7a-bJ-gHm"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="logoutButton" destination="64h-JE-ds5" id="O1e-Te-NKH"/>
                         <outlet property="tableView" destination="Unv-rg-haE" id="4Fc-Ws-26n"/>
                     </connections>
                 </viewController>

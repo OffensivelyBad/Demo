@@ -17,7 +17,7 @@ class AlertHelper {
             
         }))
         
-        alert.view.tintColor = themeColor
+        alert.view.tintColor = _THEME_COLOR
         
         sender.present(alert, animated: true, completion: nil)
         

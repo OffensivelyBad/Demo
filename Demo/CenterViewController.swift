@@ -87,7 +87,7 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         
         self.scrollView.isHidden = true
         self.scrollView.alpha = 0
-        self.viewProfileButton.backgroundColor = themeColor
+        self.viewProfileButton.backgroundColor = _THEME_COLOR
         
     }
     
@@ -103,7 +103,7 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.materialDesign = true
         
-        self.navigationController?.navigationBar.barTintColor = themeColor
+        self.navigationController?.navigationBar.barTintColor = _THEME_COLOR
         if let titleFont = self.titleFont {
             self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: titleFont, NSForegroundColorAttributeName: UIColor.white]
         }
@@ -116,18 +116,12 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         self.navigationItem.leftBarButtonItem = nayButton
         self.navigationItem.rightBarButtonItem = yayButton
         
-//        let naysButton = UIBarButtonItem(title: "Nays", style: .Plain, target: self, action: #selector(CenterViewController.naysTapped(_:)))
-//        self.navigationItem.leftBarButtonItem = naysButton
-//        
-//        let yaysButton = UIBarButtonItem(title: "Yays", style: .Plain, target: self, action: #selector(CenterViewController.yaysTapped(_:)))
-//        self.navigationItem.rightBarButtonItem = yaysButton
-        
     }
     
     func createBarButton(_ title: String, action: Selector) -> UIBarButtonItem {
         let button: CustomButton = CustomButton()
         button.frame = CGRect(x: 0, y: 0, width: 48, height: 29)
-        button.setTitleColor(themeColor, for: UIControlState())
+        button.setTitleColor(_THEME_COLOR, for: UIControlState())
         button.setTitle(title, for: UIControlState())
         button.backgroundColor = UIColor.white
         button.addTarget(self, action: action, for: .touchUpInside)
@@ -160,10 +154,10 @@ extension CenterViewController {
         
         if self.profileState == .visible {
             dismissProfileView()
-            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: themeColor, color: UIColor.white, title: getButtonTitle())
+            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: _THEME_COLOR, color: UIColor.white, title: getButtonTitle())
         } else {
             openProfile()
-            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: UIColor.white, color: themeColor, title: getButtonTitle())
+            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: UIColor.white, color: _THEME_COLOR, title: getButtonTitle())
         }
     }
     
@@ -174,7 +168,7 @@ extension CenterViewController {
         self.view.bringSubview(toFront: self.stackView)
         self.view.bringSubview(toFront: self.viewProfileButton)
         self.scrollView.layer.cornerRadius = 10
-        self.scrollView.backgroundColor = themeColor
+        self.scrollView.backgroundColor = _THEME_COLOR
         self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
         self.profileImage.clipsToBounds = true
         

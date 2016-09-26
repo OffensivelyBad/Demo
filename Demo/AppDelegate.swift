@@ -11,7 +11,7 @@ import CoreData
 import Firebase
 import FirebaseAuth
 
-let themeColor: UIColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
+let _THEME_COLOR: UIColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
 let testMode = false
 
 @UIApplicationMain
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        let addStatusBar = UIView()
 //        addStatusBar.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 20)
-//        addStatusBar.backgroundColor = themeColor
+//        addStatusBar.backgroundColor = _THEME_COLOR
 //        self.window?.rootViewController?.view .addSubview(addStatusBar)
         
         //firebase init
