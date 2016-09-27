@@ -58,7 +58,7 @@ class ContainerViewController: UIViewController {
         
     }
     
-    func test() {
+    func returnToLogin() {
         self.present(loginViewController, animated: true) { 
             //nothing to do
         }
@@ -74,7 +74,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
         
         self.networkHelper.logout()
         //navigate back to login VC
-        self.test()
+        self.returnToLogin()
     }
     
     func toggleLeftPanel() {

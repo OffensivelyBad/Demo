@@ -12,6 +12,8 @@ import Firebase
 
 class NetworkHelper {
     
+    let url = NSURL(string: "\(_WEB_ADDRESS).json?auth=\(_SECRET)")
+    
     func login(email: String, password: String, loggedIn: @escaping (Bool) -> Void) {
         if self.checkConnection() {
             FIRAuth.auth()?.signIn(withEmail: email, password: password) { (user, error) in
@@ -49,6 +51,37 @@ class NetworkHelper {
         })
         
         return signedIn
+        
+    }
+    
+    func getData(dataAcquired: (_ data: [Person], _ success: Bool) -> Void) {
+        
+        let session = URLSession.shared
+        if let url = self.url {
+            let urlRequest = URLRequest(url: url as URL)
+            session.dataTask(with: urlRequest as URLRequest, completionHandler: { (data, response, error) in
+                    
+                if error == nil && data != nil {
+                    do {
+                        let dataDict = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
+                        if let objects = dataDict["blenders"] as? [[String: String]] {
+                            var blenderArr = [Person]()
+                            for object in objects {
+                                if let name = object["name"], let birthDate = object["birthDate"], let image = object["image"] {
+                                    
+//                                    var newBlender = Person(name: name, birthDate: birthDate, image: image)
+                                }
+                            }
+                        }
+                    } catch {
+                        //catch conversion error
+                    }
+                } else {
+                    print("\(error)")
+                }
+                    
+            }).resume()
+        }
         
     }
 

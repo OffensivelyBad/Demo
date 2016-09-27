@@ -38,6 +38,9 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         
         initialLoad()
+        networkHelper.getData { (data, success) in
+            
+        }
         
     }
     
@@ -81,7 +84,7 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
 // MARK: Handle login
     @IBAction func loginTouched(_ sender: AnyObject) {
         
-        if !testMode {
+        if !_TEST_MODE {
             
             self.activityIndicator.activityStarted(sender: self)
             

@@ -12,7 +12,10 @@ import Firebase
 import FirebaseAuth
 
 let _THEME_COLOR: UIColor = UIColor(red: 0.310, green: 0.659, blue: 1.000, alpha: 1.00)
-let testMode = false
+let _TEST_MODE = false
+let _SECRET = "Y3c90mwY2njmhy2Kw4YmmxONs9qHomGvvvj4k454"
+let _WEB_ADDRESS = "https://blndr-16908.firebaseio.com/"
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
