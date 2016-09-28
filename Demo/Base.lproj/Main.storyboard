@@ -278,6 +278,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="999" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're done, son!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJD-KY-4os">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="pMb-7j-v87"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="37"/>
+                                <color key="textColor" red="0.30980392159999998" green="0.6588235294" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kYR-ho-228" customClass="CustomButton" customModule="Demo" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.1843137255" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -392,10 +400,13 @@
                             <constraint firstItem="WaE-JP-9Am" firstAttribute="leading" secondItem="dPI-a3-zYP" secondAttribute="leadingMargin" id="17c-Ln-jHu"/>
                             <constraint firstItem="WaE-JP-9Am" firstAttribute="centerX" secondItem="dPI-a3-zYP" secondAttribute="centerX" id="ESW-75-npl"/>
                             <constraint firstItem="kYR-ho-228" firstAttribute="top" secondItem="WaE-JP-9Am" secondAttribute="bottom" constant="10" id="PR2-NN-21K"/>
+                            <constraint firstItem="bJD-KY-4os" firstAttribute="leading" secondItem="dPI-a3-zYP" secondAttribute="leadingMargin" constant="8" id="QZA-dM-mWs"/>
                             <constraint firstItem="kYR-ho-228" firstAttribute="centerX" secondItem="dPI-a3-zYP" secondAttribute="centerX" id="RmA-fB-yMD"/>
                             <constraint firstItem="WaE-JP-9Am" firstAttribute="top" secondItem="dPI-a3-zYP" secondAttribute="topMargin" constant="50" id="TPO-ZS-wac"/>
+                            <constraint firstItem="bJD-KY-4os" firstAttribute="centerY" secondItem="dPI-a3-zYP" secondAttribute="centerY" id="ZC3-1S-g0Z"/>
                             <constraint firstItem="IQb-60-X0D" firstAttribute="top" secondItem="kYR-ho-228" secondAttribute="bottom" constant="30" id="mw0-Or-tpD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WaE-JP-9Am" secondAttribute="trailing" id="riX-s4-E0B"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bJD-KY-4os" secondAttribute="trailing" constant="8" id="wQy-E7-8YZ"/>
                             <constraint firstItem="IQb-60-X0D" firstAttribute="top" secondItem="WaE-JP-9Am" secondAttribute="bottom" id="yoB-k0-yEQ"/>
                         </constraints>
                         <variation key="default">
@@ -406,6 +417,7 @@
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="placeholderLabel" destination="bJD-KY-4os" id="UXa-5b-5eP"/>
                         <outlet property="profileAge" destination="Yb0-RO-t7B" id="4zP-gs-Zme"/>
                         <outlet property="profileImage" destination="UZy-G3-foT" id="Zsl-0F-tc0"/>
                         <outlet property="profileName" destination="1iZ-tY-R7c" id="OtG-OZ-pGd"/>
@@ -437,7 +449,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ldO-ak-0Ji" id="Az0-tG-Vul">
-                                            <frame key="frameInset" width="375" height="100"/>
+                                            <frame key="frameInset" width="1000" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JK2-dW-GZc">

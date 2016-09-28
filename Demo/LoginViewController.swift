@@ -38,9 +38,6 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         
         initialLoad()
-        networkHelper.getData { (data, success) in
-            
-        }
         
     }
     
@@ -90,6 +87,8 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
             
             if let usernameText = self.usernameField.text, let passwordText = self.passwordField.text {
             
+                
+                
                 self.networkHelper.login(email: usernameText, password: passwordText) { (success) in
                     
                     self.activityIndicator.activityStopped()
@@ -101,6 +100,9 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
                         self.alertHelper.displayAlert(sender: self, title: self.loginAlertTitle, message: self.loginAlertMessage)
                     }
                 }
+            } else {
+                //show an error
+                self.alertHelper.displayAlert(sender: self, title: self.loginAlertTitle, message: self.loginAlertMessage)
             }
             
         } else {

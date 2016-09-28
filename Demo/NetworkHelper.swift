@@ -23,6 +23,8 @@ class NetworkHelper {
                     loggedIn(false)
                 }
             }
+        } else {
+            loggedIn(false)
         }
     }
     
@@ -54,7 +56,7 @@ class NetworkHelper {
         
     }
     
-    func getData(dataAcquired: (_ data: [Person], _ success: Bool) -> Void) {
+    func getData(dataAcquired: @escaping (_ data: [Person], _ success: Bool) -> Void) {
         
         let session = URLSession.shared
         if let url = self.url {
@@ -64,20 +66,29 @@ class NetworkHelper {
                 if error == nil && data != nil {
                     do {
                         let dataDict = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
+                        //parse the json
                         if let objects = dataDict["blenders"] as? [[String: String]] {
                             var blenderArr = [Person]()
                             for object in objects {
-                                if let name = object["name"], let birthDate = object["birthDate"], let image = object["image"] {
-                                    
-//                                    var newBlender = Person(name: name, birthDate: birthDate, image: image)
+                                if let name = object["name"], let birthDate = object["birthDate"], let imageURL = object["image"] {
+                                    let imageView = UIImageView()
+                                    imageView.downloadedFrom(link: imageURL) { (downloaded) in
+                                        let newBlender = Person(name: name, birthDate: Date(dateString: birthDate), image: imageView.image)
+                                        blenderArr.append(newBlender)
+                                        if blenderArr.count == objects.count {
+                                            dataAcquired(blenderArr, true)
+                                        }
+                                    }
                                 }
                             }
                         }
                     } catch {
                         //catch conversion error
+                        dataAcquired([], false)
                     }
                 } else {
                     print("\(error)")
+                    dataAcquired([], false)
                 }
                     
             }).resume()

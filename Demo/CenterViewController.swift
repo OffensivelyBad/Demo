@@ -48,6 +48,9 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var profileAge: UILabel!
     @IBOutlet weak var stackView: UIStackView!   
     
+    @IBOutlet weak var placeholderLabel: UILabel!
+    let networkHelper = NetworkHelper()
+    let activityIndicator = ActivityIndicator()
     var initialLoad = true
     var xFromCenter: CGFloat = 0
     var peoplePool: Array<Person>?
@@ -80,20 +83,20 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupNavigationBar()
-        //populate the array from all people
-        self.peoplePool = Person.allPeople()
-        
+        self.loadData()
+        self.setupNavigationBar()
         self.scrollView.isHidden = true
         self.scrollView.alpha = 0
         self.viewProfileButton.backgroundColor = _THEME_COLOR
+        self.placeholderLabel.isHidden = true
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        addPictures()
+    }
+    
+    override func viewDidLayoutSubviews() {
         self.view.bringSubview(toFront: self.viewProfileButton)
     }
     
@@ -129,6 +132,31 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         button.materialDesign = true
         let finishedButton = UIBarButtonItem(customView: button)
         return finishedButton
+    }
+    
+    func loadData() {
+        
+        self.activityIndicator.activityStarted(sender: self)
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        self.networkHelper.getData { (data, success) in
+            
+            if success && data.count > 0 {
+                //load the data from the API
+                print("\(data)-------------")
+                self.peoplePool = data
+                self.activityIndicator.activityStopped()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.addPictures()
+            } else {
+                //populate the array from all people
+                self.peoplePool = Person.allPeople()
+                self.activityIndicator.activityStopped()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.addPictures()
+            }
+        }
+        
     }
     
 }
@@ -272,6 +300,9 @@ extension CenterViewController {
         for view in self.view.subviews {
             if view is UIImageView {
                 view.removeFromSuperview()
+            } else if view.tag == 999 {
+                //hide the placeholderLabel
+                view.isHidden = true
             }
         }
         
@@ -292,11 +323,14 @@ extension CenterViewController {
                     setImageConstraints(userImage)
                 }
             } else {
-                let placeholderImageView = createImage()
-                let centeredImage = centerImage(placeholderImageView)
-                centeredImage.image = self.placeholderImage
-                centeredImage.materialDesign = true
-                self.view.addSubview(centeredImage)
+                
+                self.placeholderLabel.isHidden = false
+                
+//                let placeholderImageView = createImage()
+//                let centeredImage = centerImage(placeholderImageView)
+//                centeredImage.image = self.placeholderImage
+//                centeredImage.materialDesign = true
+//                self.view.addSubview(centeredImage)
             }
         }
         personWasSelected = false

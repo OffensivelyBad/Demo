@@ -1,12 +1,12 @@
 //
-//  viewExtension.swift
+//  UIViewExtension.swift
 //  Demo
 //
 //  Created by Shawn Roller on 7/21/16.
 //  Copyright © 2016 OffensivelyBad. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 extension UIView {
     
