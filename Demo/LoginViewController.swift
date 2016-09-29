@@ -41,6 +41,7 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
         
     }
     
+    
 // MARK: UI Setup
     func initialLoad() {
         
@@ -77,6 +78,8 @@ class LoginViewController: KeyboardVC, UITextFieldDelegate {
         return true
         
     }
+    
+    
     
 // MARK: Handle login
     @IBAction func loginTouched(_ sender: AnyObject) {

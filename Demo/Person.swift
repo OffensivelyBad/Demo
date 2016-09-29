@@ -27,6 +27,7 @@ class Person {
         self.image = image
     }
     
+//MARK: hardcode test data
     class func allPeople() -> Array<Person> {
         return [
             Person(name: "Shane", birthDate: Date(dateString: "1983-02-07"), image: UIImage(named: "DrunkCowboy.jpg")),

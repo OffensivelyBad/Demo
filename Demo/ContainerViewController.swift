@@ -52,10 +52,7 @@ class ContainerViewController: UIViewController {
         addChildViewController(centerNavigationController)
         
         centerNavigationController.didMove(toParentViewController: self)
-        
-//        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
-//        centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
-        
+
     }
     
     func returnToLogin() {
@@ -65,6 +62,8 @@ class ContainerViewController: UIViewController {
     }
     
 }
+
+
 
 // MARK: CenterViewController delegate
 
@@ -191,43 +190,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
 }
 
 
-/*
-    // MARK: Gesture recognizer
-extension ContainerViewController: UIGestureRecognizerDelegate {
-    
-    func handlePanGesture(recognizer: UIPanGestureRecognizer) {
-        let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
-        
-        switch(recognizer.state) {
-        case .began:
-            if (currentState == .BothCollapsed) {
-                if (gestureIsDraggingFromLeftToRight) {
-                    addLeftPanelViewController()
-                } else {
-                    addRightPanelViewController()
-                }
-                
-                showShadowForCenterViewController(true)
-            }
-        case .Changed:
-            recognizer.view!.center.x = recognizer.view!.center.x + recognizer.translationInView(view).x
-            recognizer.setTranslation(CGPointZero, inView: view)
-        case .Ended:
-            if (leftViewController != nil) {
-                // animate the side panel open or closed based on whether the view has moved more or less than halfway
-                let hasMovedGreaterThanHalfway = recognizer.view!.center.x > view.bounds.size.width
-                animateLeftPanel(hasMovedGreaterThanHalfway)
-            } else if (rightViewController != nil) {
-                let hasMovedGreaterThanHalfway = recognizer.view!.center.x < 0
-                animateRightPanel(hasMovedGreaterThanHalfway)
-            }
-        default:
-            break
-        }
-    }
-}
-*/
-
+//MARK: storyboard identifiers for navigation
 private extension UIStoryboard {
     class func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: Bundle.main) }
     

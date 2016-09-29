@@ -56,6 +56,8 @@ class SidePanelViewController: UIViewController {
     
 }
 
+
+
 // MARK: Table View Data Source
 
 extension SidePanelViewController: UITableViewDataSource {
@@ -91,6 +93,8 @@ extension SidePanelViewController: UITableViewDataSource {
     }
     
 }
+
+
 
 // Mark: Table View Delegate
 
@@ -135,6 +139,8 @@ extension SidePanelViewController: UITableViewDelegate {
     }
     
 }
+
+
 
 // Mark: Configure Table View Cell
 

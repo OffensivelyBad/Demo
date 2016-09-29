@@ -68,6 +68,7 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
     enum ProfileVisibility {
         case visible
         case invisible
+        case reset
     }
     var profileState: ProfileVisibility = .invisible
     
@@ -143,7 +144,6 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
             
             if success && data.count > 0 {
                 //load the data from the API
-                print("\(data)-------------")
                 self.peoplePool = data
                 self.activityIndicator.activityStopped()
                 UIApplication.shared.endIgnoringInteractionEvents()
@@ -159,138 +159,45 @@ class CenterViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-}
-
-//Mark: handle profilestate
-extension CenterViewController {
+    func resetImages() {
+        
+        nays? = []
+        yays? = []
+        self.peoplePool = []
+        self.loadData()
+        self.profileState = .invisible
+        self.setupButton(color: UIColor.white, backgroundColor: _THEME_COLOR)
     
-    func getButtonTitle() -> String {
-        switch self.profileState {
-        case .invisible:
-            return "View Profile"
-        case .visible:
-            return "Dismiss"
-        }
     }
     
 }
 
-//MARK: handle profile view
+
+
+//MARK: handle profile view & button
 extension CenterViewController {
     
     @IBAction func viewProfileTapped(_ sender: AnyObject) {
         
         if self.profileState == .visible {
-            dismissProfileView()
-            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: _THEME_COLOR, color: UIColor.white, title: getButtonTitle())
-        } else {
-            openProfile()
-            transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: UIColor.white, color: _THEME_COLOR, title: getButtonTitle())
+            self.dismissProfileView()
+            self.setupButton(color: UIColor.white, backgroundColor: _THEME_COLOR)
+        } else if self.profileState == .invisible {
+            self.openProfile()
+            self.setupButton(color: _THEME_COLOR, backgroundColor: UIColor.white)
+        } else if self.profileState == .reset {
+            self.resetImages()
         }
     }
     
-    func openProfile() {
-        //pop open the profile view
-        self.profileState = .visible
-        self.view.bringSubview(toFront: self.scrollView)
-        self.view.bringSubview(toFront: self.stackView)
-        self.view.bringSubview(toFront: self.viewProfileButton)
-        self.scrollView.layer.cornerRadius = 10
-        self.scrollView.backgroundColor = _THEME_COLOR
-        self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
-        self.profileImage.clipsToBounds = true
-        
-        toggleViews([self.scrollView, self.viewProfileButton, (self.navigationController?.navigationBar)!])
-        
-        populateProfileData()
-//        populateTestData()
-    }
-    
-    func populateTestData() {
-        
-        let image = UIImage(named: "DrunkCowboy.jpg")
-        self.profileImage.image = image
-        self.profileName.text = "DrunkCowboy"
-        self.profileAge.text = "33"
-        
-    }
-    
-    func populateProfileData() {
-        if let person = self.selectedPerson {
-            self.profileImage.image = person.image
-            self.profileName.text = person.name
-            self.profileAge.text = "\(person.age)"
-        }
-    }
-    
-    func dismissProfileView() {
-        
-        self.profileState = .invisible
-        self.view.bringSubview(toFront: self.viewProfileButton)
-        toggleViews([self.scrollView, self.viewProfileButton, (self.navigationController?.navigationBar)!])
-        
+    func setupButton(color: UIColor, backgroundColor: UIColor) {
+        self.transformView(self.viewProfileButton, duration: 0.5, alpha: 1.0, backgroundColor: backgroundColor, color: color, title: getButtonTitle())
     }
     
 }
 
-//MARK: handle view visibility
-extension CenterViewController {
-    
-    func toggleViews(_ views: [UIView]) {
-        
-        if let navBar = self.navigationController?.navigationBar {
-        
-            if navBar.isTranslucent {
-                self.navigationController?.navigationBar.isTranslucent = false
-            } else {
-                self.navigationController?.navigationBar.isTranslucent = true
-            }
-            
-        }
-        
-        for view in views {
-            if view.isHidden {
-                view.isHidden = false
-                transformView(view, duration: 0.5, alpha: 1.0, backgroundColor: nil, color: nil, title: nil)
-            } else {
-                transformView(view, duration: 0.5, alpha: 0.0, backgroundColor: nil, color: nil, title: nil)
-            }
-        }
-        
-    }
-    
-    func transformView(_ view: UIView, duration: Double, alpha: CGFloat?, backgroundColor: UIColor?, color: UIColor?, title: String?) {
-        UIView.animate(withDuration: duration, animations: { () -> Void in
-            
-            if let alpha = alpha {
-                view.alpha = alpha
-            }
-            if let backgroundColor = backgroundColor {
-                view.backgroundColor = backgroundColor
-            }
-            if let color = color {
-                if view is UIButton {
-                    let button = view as! UIButton
-                    button.setTitleColor(color, for: UIControlState())
-                }
-            }
-            if let title = title {
-                if view is UIButton {
-                    let button = view as! UIButton
-                    button.setTitle(title, for: UIControlState())
-                }
-            }
-            
-        }, completion: { (complete) -> Void in
-            if complete {
-                if alpha == 0.0 {
-                    view.isHidden = true
-                }
-            }
-        }) 
-    }
-    
-}
+
+
 
 //MARK: handle images
 extension CenterViewController {
@@ -325,6 +232,8 @@ extension CenterViewController {
             } else {
                 
                 self.placeholderLabel.isHidden = false
+                self.profileState = .reset
+                self.setupButton(color: UIColor.white, backgroundColor: _THEME_COLOR)
                 
 //                let placeholderImageView = createImage()
 //                let centeredImage = centerImage(placeholderImageView)
@@ -430,6 +339,8 @@ extension CenterViewController {
     
 }
 
+
+
 //MARK: handle touches
 extension CenterViewController {
     
@@ -441,6 +352,8 @@ extension CenterViewController {
     }
     
 }
+
+
 
 //MARK: delegate functions
 extension CenterViewController: SidePanelViewControllerDelegate {

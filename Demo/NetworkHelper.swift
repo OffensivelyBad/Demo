@@ -14,6 +14,7 @@ class NetworkHelper {
     
     let url = NSURL(string: "\(_WEB_ADDRESS).json?auth=\(_SECRET)")
     
+//MARK: Handle login/out
     func login(email: String, password: String, loggedIn: @escaping (Bool) -> Void) {
         if self.checkConnection() {
             FIRAuth.auth()?.signIn(withEmail: email, password: password) { (user, error) in
@@ -56,6 +57,8 @@ class NetworkHelper {
         
     }
     
+    
+//MARK: handle data retrieval 
     func getData(dataAcquired: @escaping (_ data: [Person], _ success: Bool) -> Void) {
         
         let session = URLSession.shared
